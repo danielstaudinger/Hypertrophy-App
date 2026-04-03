@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="FORGE">
+  <meta name="theme-color" content="#F5F7FA">
+  <title>FORGE — Hypertrophy Tracker</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body, #root { height: 100%; width: 100%; background: #F5F7FA; }
+    body { overscroll-behavior: none; -webkit-tap-highlight-color: transparent; }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    // Shim window.storage to use localStorage (same API shape the artifact uses)
+    window.storage = {
+      async get(key) {
+        const val = localStorage.getItem('forge_' + key);
+        return val != null ? { key, value: val } : null;
+      },
+      async set(key, value) {
+        localStorage.setItem('forge_' + key, value);
+        return { key, value };
+      },
+      async delete(key) {
+        localStorage.removeItem('forge_' + key);
+        return { key, deleted: true };
+      },
+      async list(prefix) {
+        const keys = [];
+        for (let i = 0; i < localStorage.length; i++) {
+          const k = localStorage.key(i);
+          if (k.startsWith('forge_' + (prefix || ''))) keys.push(k.replace('forge_', ''));
+        }
+        return { keys };
+      }
+    };
+  </script>
+  <script type="text/babel">
+const { useState, useEffect, useCallback, useRef, useMemo } = React;
+
+// ═══════════════════════════════════════════════════════════════
+// FORGE — Structured Hypertrophy Tracker
+// A premium workout execution app for evidence-based lifters
+// ═══════════════════════════════════════════════════════════════
+
+// ─── DESIGN TOKENS ───────────────────────────────────────────
+const STORAGE_KEY = "forge_app_state";
+
+// ─── PROGRAM DATA ────────────────────────────────────────────
+// Main lifts with progression tracking across weeks
+const EXERCISE_PROGRESSION_STEP = {
+  "Bench Press": 2.5, "Conventional Deadlift": 5, "Chest-Supported Row": 2.5,
+  "Front Squat": 2.5, "Barbell OHP": 2.5, "Weighted Pull-Up": 2.5,
+  "Romanian Deadlift": 5
+};
+
+const MAIN_LIFTS = Object.keys(EXERCISE_PROGRESSION_STEP);
+
+function parseWeight(text) {
+  text = (text || "").trim();
+  if (text === "BW") return { type: "bw", value: 0 };
+  let m = text.match(/^BW\s*\+\s*([\d.]+)\s*kg$/i);
+  if (m) return { type: "bwplus", value: parseFloat(m[1]) };
+  m = text.match(/^([\d.]+)\s*kg$/i);
+  if (m) return { type: "kg", value: parseFloat(m[1]) };
+  return { type: "text", value: text };
+}
+
+function formatWeight(obj) {
+  if (obj.type === "bw") return "BW";
+  if (obj.type === "bwplus") return obj.value === 0 ? "BW" : `BW + ${obj.value} kg`;
+  if (obj.type === "kg") return `${obj.value} kg`;
+  return obj.value;
+}
+
+function adjustWeight(weightStr, delta) {
+  const w = parseWeight(weightStr);
+  if (w.type === "kg" || w.type === "bwplus") {
+    return formatWeight({ ...w, value: Math.max(0, +(w.value + delta).toFixed(1)) });
+  }
+  return weightStr;
+}
+
+// Full 7-week program extracted from Daniel's HTML
+const WEEK_PHASES = [
+  { label: "Submaximal I", phase: "intro" },
+  { label: "Submaximal II", phase: "intro" },
+  { label: "Accumulation I", phase: "accumulate" },
+  { label: "Accumulation II", phase: "accumulate" },
+  { label: "Peak I", phase: "peak" },
+  { label: "Peak II", phase: "peak" },
+  { label: "Deload", phase: "deload" }
+];
+
+const DAY_LABELS = [
+  { key: "MON", label: "PUSH A", subtitle: "Chest Primary" },
+  { key: "TUE", label: "PULL A", subtitle: "Back + Deadlift" },
+  { key: "WED", label: "LEGS A", subtitle: "Quad Primary" },
+  { key: "THU", label: "PUSH B", subtitle: "Shoulder Primary" },
+  { key: "FRI", label: "PULL B", subtitle: "Back Width + Arms" },
+  { key: "SAT", label: "LEGS B", subtitle: "Posterior Chain" }
+];
+
+// Compact program data: [exercise, [sets], isMainLift?]
+// Each set: [reps, weight, targetRPE]
+function buildProgram() {
+  const weeks = [];
+  
+  // Helper: generates sets with escalating RPE
+  const s = (reps, weight, rpes) => rpes.map(r => ({ reps, weight, targetRPE: r }));
+  
+  // ─── WEEK 1 ─── Submaximal I
+  weeks.push({
+    days: [
+      { // MON PUSH A
+        exercises: [
+          { name: "Bench Press", tags: ["Top set + back-offs"], isMain: true, sets: s("7","100 kg",[7.0,7.0,7.5,8.0]) },
+          { name: "Incline DB Press", sets: s("10–12","35 kg DBs",[7.0,7.5,8.0,8.5]) },
+          { name: "Weighted Dip", sets: [...s("8–12","BW + 10 kg",[7.0,7.5]), ...s("10–15","BW + 10 kg",[8.0,8.5])] },
+          { name: "Cable Fly / Pec Deck", sets: s("15–20","15 kg/side",[8.0,8.5,9.0]) },
+          { name: "Cable Triceps Extension", sets: s("12–15","30 kg",[8.0,8.5,9.0]) },
+          { name: "EZ Bar Skull Crushers", sets: s("10–12","30 kg",[8.0,8.5,9.0]) },
+          { name: "Cable Lateral Raise", sets: s("15–20","10 kg/side",[8.0,8.5,9.0]) },
+          { name: "Cable Rope Crunch", sets: s("12–20","4 plates",[8.0,8.5,9.0]) },
+        ]
+      },
+      { // TUE PULL A
+        exercises: [
+          { name: "Conventional Deadlift", tags: ["Top set + back-offs"], isMain: true, sets: s("5","150 kg",[7.0,7.0,7.5]) },
+          { name: "Chest-Supported Row", tags: ["Top set + back-offs"], isMain: true, sets: [{ reps:"7", weight:"82.5 kg", targetRPE:7.0 },{ reps:"7", weight:"80 kg", targetRPE:7.0 },{ reps:"7", weight:"80 kg", targetRPE:7.5 },{ reps:"7", weight:"80 kg", targetRPE:8.0 }] },
+          { name: "Lat Pulldown", sets: s("10–12","80 kg",[7.0,7.5,8.0,8.5]) },
+          { name: "Seated Cable Row", sets: s("10–12","75 kg",[7.0,7.5,8.0,8.5]) },
+          { name: "EZ-Bar Curl", sets: s("10–12","25 kg",[8.0,8.5,9.0]) },
+          { name: "Hammer Curl", sets: s("12–15","14 kg DBs",[8.0,8.5,9.0]) },
+        ]
+      },
+      { // WED LEGS A
+        exercises: [
+          { name: "Front Squat", tags: ["Top set + back-offs"], isMain: true, sets: [{ reps:"5", weight:"82.5 kg", targetRPE:7.0 },{ reps:"5", weight:"80 kg", targetRPE:7.0 },{ reps:"5", weight:"80 kg", targetRPE:7.5 },{ reps:"5", weight:"80 kg", targetRPE:8.0 }] },
+          { name: "Romanian Deadlift", tags: ["secondary"], isMain: true, sets: s("10–12","100 kg",[7.0,7.5,8.0,8.5]) },
+          { name: "Leg Press", sets: s("10–12","160 kg",[7.0,7.5,8.0,8.5]) },
+          { name: "Leg Extension", sets: s("15–20","40 kg",[8.0,8.5,9.0]) },
+          { name: "Lying Leg Curl", sets: s("12–15","30 kg",[8.0,8.5,9.0]) },
+          { name: "Standing Calf Raise", sets: [...s("15–20","100 kg",[8.0,8.5,9.0,9.0,9.0,9.0])] },
+        ]
+      },
+      { // THU PUSH B
+        exercises: [
+          { name: "Barbell OHP", tags: ["Top set + back-offs"], isMain: true, sets: [{ reps:"7", weight:"42.5 kg", targetRPE:7.0 },{ reps:"7", weight:"40 kg", targetRPE:7.0 },{ reps:"7", weight:"40 kg", targetRPE:7.5 },{ reps:"7", weight:"40 kg", targetRPE:8.0 }] },
+          { name: "Seated DB Shoulder Press", sets: s("10–12","22 kg DBs",[7.0,7.5,8.0,8.5]) },
+          { name: "Incline DB Press", sets: s("10–12","32.5 kg DBs",[7.0,7.5,8.0,8.5]) },
+          { name: "Cable Lateral Raise", sets: s("15–20","10 kg/side",[8.0,8.5,9.0]) },
+          { name: "Face Pull", sets: s("15–20","25 kg",[8.0,8.5,9.0]) },
+          { name: "Weighted Dip", sets: s("8–12","BW + 12.5 kg",[8.0,8.5,9.0]) },
+          { name: "EZ Bar Skull Crushers", sets: s("10–12","30 kg",[8.0,8.5,9.0]) },
+        ]
+      },
+      { // FRI PULL B
+        exercises: [
+          { name: "Weighted Pull-Up", tags: ["Top set + back-offs"], isMain: true, sets: s("6","BW + 10 kg",[7.0,7.0,7.5,8.0]) },
+          { name: "Cable Single-Arm Row", sets: s("10–12/side","45 kg",[7.0,7.5,8.0,8.5]) },
+          { name: "Chest-Supported Row", sets: s("10–12","70 kg",[7.0,7.5,8.0,8.5]) },
+          { name: "Rear Delt Fly", sets: s("15–20","12 kg/side",[8.0,8.5,9.0]) },
+          { name: "Incline DB Curl", sets: s("10–15","14 kg DBs",[8.0,8.5,9.0]) },
+          { name: "Cable Curl", sets: s("12–15","27.5 kg",[8.0,8.5,9.0]) },
+          { name: "Face Pull", sets: s("15–20","25 kg",[8.0,8.5,9.0]) },
+          { name: "Ab Wheel", sets: s("8–15","BW",[8.0,8.5,9.0]) },
+        ]
+      },
+      { // SAT LEGS B
+        exercises: [
+          { name: "Romanian Deadlift", tags: ["Top set + back-offs"], isMain: true, sets: [{ reps:"7", weight:"105 kg", targetRPE:7.0 },{ reps:"7", weight:"100 kg", targetRPE:7.0 },{ reps:"7", weight:"100 kg", targetRPE:7.5 },{ reps:"7", weight:"100 kg", targetRPE:8.0 }] },
+          { name: "Hack Squat / SSB Squat", sets: s("8–12","100 kg",[7.0,7.5,8.0,8.5]) },
+          { name: "45° Back Extension", sets: s("10–15","BW + 10 kg",[7.0,7.5,8.0,8.5]) },
+          { name: "Bulgarian Split Squat", sets: s("10–12/leg","24 kg DBs",[8.0,8.5,9.0]) },
+          { name: "Seated Leg Curl", sets: s("10–15","30 kg",[8.0,8.5,9.0]) },
+          { name: "Seated Calf Raise", sets: [...s("15–20","60 kg",[8.0,8.5,9.0,9.0,9.0,9.0])] },
+        ]
+      }
+    ]
+  });
+  
+  // Week 2-7: Generate with progressive overload on main lifts
+  const mainLiftWeeklyWeights = {
+    "Bench Press":           [100, 102.5, 105, 107.5, 110, 112.5, 85],
+    "Conventional Deadlift": [150, 155, 160, 165, 170, 175, 140],
+    "Chest-Supported Row":   [82.5, 85, 90, 92.5, 95, 97.5, 72.5],
+    "Front Squat":           [82.5, 85, 87.5, 90, 92.5, 95, 70],
+    "Barbell OHP":           [42.5, 45, 47.5, 50, 52.5, 55, 40],
+    "Weighted Pull-Up":      [10, 12.5, 15, 17.5, 20, 22.5, 0],
+    "Romanian Deadlift":     [105, 110, 115, 117.5, 120, 122.5, 90],
+  };
+  
+  // For weeks 2-6, clone week 1 structure and update main lift weights
+  for (let w = 1; w < 7; w++) {
+    const weekData = JSON.parse(JSON.stringify(weeks[0]));
+    weekData.days.forEach(day => {
+      day.exercises.forEach(ex => {
+        if (ex.isMain && mainLiftWeeklyWeights[ex.name]) {
+          const topWeight = mainLiftWeeklyWeights[ex.name][w];
+          ex.sets.forEach((set, i) => {
+            const baseW = parseWeight(set.weight);
+            if (ex.name === "Weighted Pull-Up") {
+              set.weight = topWeight === 0 ? "BW" : `BW + ${topWeight} kg`;
+            } else if (baseW.type === "kg") {
+              // Top set gets the full weight, back-offs get -2.5 or -5
+              const step = EXERCISE_PROGRESSION_STEP[ex.name] || 2.5;
+              set.weight = i === 0 ? `${topWeight} kg` : `${topWeight - step} kg`;
+            }
+          });
+          // Adjust RPE based on week phase
+          if (w >= 2 && w <= 3) { // accumulation
+            ex.sets.forEach((set, i) => {
+              if (i === 0) set.targetRPE = 8.0;
+              else if (i < ex.sets.length - 1) set.targetRPE = 8.0 + (i > 1 ? 0.5 : 0);
+              else set.targetRPE = 9.0;
+            });
+            // Add extra set for accumulation
+            if (ex.sets.length < 5) {
+              ex.sets.push({ ...ex.sets[ex.sets.length-1], targetRPE: 9.0 });
+            }
+          }
+          if (w >= 4 && w <= 5) { // peak
+            const peakReps = ex.name.includes("Deadlift") || ex.name.includes("Squat") ? "5" : 
+                            ex.name.includes("Pull-Up") ? "6" : "6";
+            ex.sets.forEach((set, i) => {
+              set.reps = peakReps;
+              if (i === 0) set.targetRPE = 8.0;
+              else if (i < 3) set.targetRPE = 8.0 + (i > 1 ? 0.5 : 0);
+              else set.targetRPE = Math.min(9.0, 8.5 + (i-2)*0.5);
+            });
+            if (ex.sets.length < 6) {
+              const last = ex.sets[ex.sets.length-1];
+              while (ex.sets.length < 6) ex.sets.push({ ...last, targetRPE: 9.0 });
+            }
+          }
+          if (w === 6) { // deload
+            ex.sets = [{ reps: ex.sets[0].reps, weight: ex.sets[0].weight, targetRPE: 6.0 }];
+          }
+        }
+        // Deload: reduce accessory sets to 2
+        if (w === 6 && !ex.isMain) {
+          ex.sets = ex.sets.slice(0, 2).map(set => ({ ...set, targetRPE: 6.0 }));
+        }
+      });
+    });
+    weeks.push(weekData);
+  }
+  
+  return weeks;
+}
+
+const PROGRAM = buildProgram();
+
+// ─── PERSISTENCE ─────────────────────────────────────────────
+function loadState() {
+  try {
+    const raw = window.storage ? null : null; // Use persistent storage API
+    // For artifact: use in-memory state with storage API
+    return null;
+  } catch { return null; }
+}
+
+// ─── ICONS (SVG inline) ──────────────────────────────────────
+const Icon = ({ name, size = 20, color = "currentColor" }) => {
+  const icons = {
+    check: <path d="M20 6L9 17l-5-5" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>,
+    chevronRight: <path d="M9 18l6-6-6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>,
+    chevronLeft: <path d="M15 18l-6-6 6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>,
+    clock: <><circle cx="12" cy="12" r="10" strokeWidth="1.5"/><path d="M12 6v6l4 2" strokeWidth="2" strokeLinecap="round"/></>,
+    dumbbell: <path d="M6.5 6.5h11M4 8.5h2.5v7H4a1 1 0 01-1-1v-5a1 1 0 011-1zm14 0h2a1 1 0 011 1v5a1 1 0 01-1 1h-2v-7zM6.5 10h0M17.5 10h0" strokeWidth="1.5" strokeLinecap="round"/>,
+    flame: <path d="M12 2c.5 3.5-1 5.5-1 8 0 2 1.5 3 3 3s3-1 3-3c0-3.5-3-5-3-8-1 2-4 3-4 6s1.5 4 4 4 4.5-2 4.5-5C18.5 4 12 2 12 2z" strokeWidth="1.5"/>,
+    home: <><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" strokeWidth="1.5"/><path d="M9 22V12h6v10" strokeWidth="1.5"/></>,
+    calendar: <><rect x="3" y="4" width="18" height="18" rx="2" strokeWidth="1.5"/><path d="M16 2v4M8 2v4M3 10h18" strokeWidth="1.5"/></>,
+    chart: <path d="M18 20V10M12 20V4M6 20v-6" strokeWidth="2" strokeLinecap="round"/>,
+    arrowUp: <path d="M12 19V5m-7 7l7-7 7 7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>,
+    arrowDown: <path d="M12 5v14m7-7l-7 7-7-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>,
+    play: <polygon points="5,3 19,12 5,21" strokeWidth="1.5" strokeLinejoin="round"/>,
+    pause: <><rect x="6" y="4" width="4" height="16" strokeWidth="1.5" rx="1"/><rect x="14" y="4" width="4" height="16" strokeWidth="1.5" rx="1"/></>,
+    settings: <><circle cx="12" cy="12" r="3" strokeWidth="1.5"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" strokeWidth="1.5"/></>,
+    minus: <path d="M5 12h14" strokeWidth="2" strokeLinecap="round"/>,
+    plus: <path d="M12 5v14M5 12h14" strokeWidth="2" strokeLinecap="round"/>,
+    x: <path d="M18 6L6 18M6 6l12 12" strokeWidth="2" strokeLinecap="round"/>,
+    trophy: <><path d="M6 9H4a2 2 0 01-2-2V5a2 2 0 012-2h2M18 9h2a2 2 0 002-2V5a2 2 0 00-2-2h-2" strokeWidth="1.5"/><path d="M6 3h12v6a6 6 0 01-12 0V3zM9 21h6M12 15v6" strokeWidth="1.5"/></>,
+  };
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} style={{flexShrink:0}}>
+      {icons[name]}
+    </svg>
+  );
+};
+
+// ─── REST TIMER ──────────────────────────────────────────────
+function RestTimer({ defaultSeconds = 120, onDismiss }) {
+  const [seconds, setSeconds] = useState(defaultSeconds);
+  const [running, setRunning] = useState(true);
+  const intervalRef = useRef(null);
+  
+  useEffect(() => {
+    if (running && seconds > 0) {
+      intervalRef.current = setInterval(() => setSeconds(s => s - 1), 1000);
+    }
+    return () => clearInterval(intervalRef.current);
+  }, [running, seconds]);
+  
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  const pct = ((defaultSeconds - seconds) / defaultSeconds) * 100;
+  
+  return (
+    <div style={{
+      position: "fixed", bottom: 80, left: "50%", transform: "translateX(-50%)",
+      background: "var(--surface-elevated)", backdropFilter: "blur(20px)",
+      borderRadius: 20, padding: "12px 20px", display: "flex", alignItems: "center", gap: 14,
+      boxShadow: "0 8px 32px rgba(0,0,0,0.2), 0 0 0 1px var(--border)",
+      zIndex: 100, minWidth: 240
+    }}>
+      <div style={{ position: "relative", width: 44, height: 44 }}>
+        <svg width={44} height={44} style={{ transform: "rotate(-90deg)" }}>
+          <circle cx={22} cy={22} r={18} fill="none" stroke="var(--border)" strokeWidth={3}/>
+          <circle cx={22} cy={22} r={18} fill="none" stroke={seconds <= 10 ? "var(--accent-red)" : "var(--accent)"} strokeWidth={3}
+            strokeDasharray={113} strokeDashoffset={113 - (pct/100)*113}
+            strokeLinecap="round" style={{ transition: "stroke-dashoffset 1s linear" }}/>
+        </svg>
+        <span style={{ position:"absolute", inset:0, display:"flex", alignItems:"center", justifyContent:"center",
+          fontSize: 13, fontWeight: 700, fontVariantNumeric: "tabular-nums", color: seconds <= 10 ? "var(--accent-red)" : "var(--text-primary)" }}>
+          {mins}:{secs.toString().padStart(2,"0")}
+        </span>
+      </div>
+      <div style={{ flex: 1 }}>
+        <div style={{ fontSize: 12, color: "var(--text-tertiary)", fontWeight: 600, letterSpacing: "0.04em", textTransform: "uppercase" }}>Rest</div>
+        <div style={{ fontSize: 14, color: "var(--text-secondary)" }}>
+          {seconds <= 0 ? "Time to lift!" : "Recovering..."}
+        </div>
+      </div>
+      <button onClick={() => setRunning(!running)} style={{
+        width: 36, height: 36, borderRadius: 12, border: "1px solid var(--border)",
+        background: "var(--surface)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "var(--text-primary)"
+      }}>
+        <Icon name={running ? "pause" : "play"} size={16}/>
+      </button>
+      <button onClick={onDismiss} style={{
+        width: 36, height: 36, borderRadius: 12, border: "1px solid var(--border)",
+        background: "var(--surface)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "var(--text-tertiary)"
+      }}>
+        <Icon name="x" size={16}/>
+      </button>
+    </div>
+  );
+}
+
+// ─── SET ROW COMPONENT ───────────────────────────────────────
+function SetRow({ set, setIndex, exerciseIndex, dayIndex, weekIndex, logged, onLog, isFirst }) {
+  const isLogged = logged?.repsHit != null;
+  const targetRepsNum = parseInt((set.reps.match(/\d+/) || ["0"])[0], 10);
+  
+  // Local selected value — starts with logged value if exists, otherwise target reps
+  const [selectedReps, setSelectedReps] = useState(isLogged ? logged.repsHit : targetRepsNum);
+  
+  // Sync if logged data changes externally (e.g. reset)
+  useEffect(() => {
+    if (isLogged) setSelectedReps(logged.repsHit);
+    else setSelectedReps(targetRepsNum);
+  }, [isLogged, logged?.repsHit, targetRepsNum]);
+  
+  // Has user modified the dropdown away from target?
+  const isModified = selectedReps !== targetRepsNum;
+  
+  // Determine rep outcome for main lifts
+  let outcome = null;
+  if (isLogged && isFirst) {
+    if (logged.repsHit > targetRepsNum) outcome = "exceeded";
+    else if (logged.repsHit < targetRepsNum) outcome = "missed";
+    else outcome = "matched";
+  }
+  
+  const repsOptions = [];
+  for (let i = 0; i <= 30; i++) repsOptions.push(i);
+  
+  const handleConfirm = () => {
+    if (isLogged) {
+      // Tap again to un-log
+      onLog(weekIndex, dayIndex, exerciseIndex, setIndex, null);
+    } else {
+      onLog(weekIndex, dayIndex, exerciseIndex, setIndex, selectedReps);
+    }
+  };
+  
+  return (
+    <div style={{
+      display: "grid", gridTemplateColumns: "1fr 1fr auto auto",
+      alignItems: "center", gap: 8, padding: "10px 0",
+      borderTop: setIndex > 0 ? "1px solid var(--border-subtle)" : "none",
+      opacity: isLogged ? 0.7 : 1,
+      transition: "all 0.2s ease"
+    }}>
+      {/* Weight */}
+      <div>
+        <span style={{ fontSize: 15, fontWeight: 600, color: "var(--text-primary)", fontVariantNumeric: "tabular-nums" }}>
+          {set.weight}
+        </span>
+      </div>
+      
+      {/* Reps × RPE target */}
+      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+        <span style={{ fontSize: 13, color: "var(--text-secondary)", fontVariantNumeric: "tabular-nums" }}>
+          {set.reps} × RPE {set.targetRPE}
+        </span>
+      </div>
+      
+      {/* Reps Selector — pre-filled with target, changeable */}
+      <div style={{ position: "relative" }}>
+        <select
+          value={selectedReps}
+          onChange={(e) => setSelectedReps(parseInt(e.target.value, 10))}
+          disabled={isLogged}
+          style={{
+            width: 56, height: 40, borderRadius: 10,
+            border: isLogged
+              ? "2px solid var(--accent)"
+              : isModified
+                ? "2px solid var(--accent-dim)"
+                : "1.5px dashed var(--border)",
+            background: isLogged
+              ? "var(--accent-bg)"
+              : isModified
+                ? "rgba(59,130,246,0.06)"
+                : "var(--surface)",
+            color: isLogged
+              ? "var(--accent)"
+              : isModified
+                ? "var(--accent)"
+                : "var(--text-tertiary)",
+            fontSize: 15, fontWeight: 700, textAlign: "center",
+            cursor: isLogged ? "default" : "pointer",
+            appearance: "none", WebkitAppearance: "none",
+            fontVariantNumeric: "tabular-nums",
+            paddingRight: 4,
+            opacity: isLogged ? 1 : (isModified ? 1 : 0.55),
+            transition: "all 0.15s ease"
+          }}
+        >
+          {repsOptions.map(r => <option key={r} value={r}>{r}</option>)}
+        </select>
+      </div>
+      
+      {/* Confirm / Un-log button */}
+      <button
+        onClick={handleConfirm}
+        style={{
+          width: 36, height: 36, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center",
+          background: isLogged ? "var(--accent)" : "transparent",
+          border: isLogged ? "none" : "1.5px dashed var(--border)",
+          transition: "all 0.15s ease",
+          color: isLogged ? "#fff" : "var(--text-tertiary)",
+          cursor: "pointer", padding: 0,
+          WebkitTapHighlightColor: "transparent"
+        }}
+        title={isLogged ? "Undo log" : "Log set"}
+      >
+        <Icon name="check" size={16} color={isLogged ? "#fff" : "var(--text-tertiary)"}/>
+      </button>
+    </div>
+  );
+}
+
+// ─── EXERCISE BLOCK ──────────────────────────────────────────
+function ExerciseBlock({ exercise, exerciseIndex, dayIndex, weekIndex, logData, onLog, onStartRest }) {
+  const completedSets = exercise.sets.filter((_, i) => {
+    const key = `${weekIndex}-${dayIndex}-${exerciseIndex}-${i}`;
+    return logData[key]?.repsHit != null;
+  }).length;
+  
+  const allDone = completedSets === exercise.sets.length;
+  
+  return (
+    <div style={{
+      background: "var(--surface)", borderRadius: 16,
+      border: "1px solid var(--border)",
+      padding: "14px 16px", marginBottom: 10,
+      transition: "all 0.2s ease",
+      ...(allDone ? { borderColor: "var(--accent-dim)", opacity: 0.85 } : {})
+    }}>
+      {/* Exercise Header */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
+        <div>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <span style={{ fontSize: 15, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.01em" }}>
+              {exercise.name}
+            </span>
+            {exercise.isMain && (
+              <span style={{
+                fontSize: 10, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase",
+                background: "var(--accent-bg)", color: "var(--accent)", padding: "2px 7px", borderRadius: 6
+              }}>MAIN</span>
+            )}
+          </div>
+          {exercise.tags && (
+            <div style={{ fontSize: 11, color: "var(--text-tertiary)", marginTop: 2 }}>
+              {exercise.tags.join(" · ")}
+            </div>
+          )}
+        </div>
+        <span style={{
+          fontSize: 12, fontWeight: 600, fontVariantNumeric: "tabular-nums",
+          color: allDone ? "var(--accent)" : "var(--text-tertiary)"
+        }}>
+          {completedSets}/{exercise.sets.length}
+        </span>
+      </div>
+      
+      {/* Set Rows */}
+      {exercise.sets.map((set, i) => {
+        const key = `${weekIndex}-${dayIndex}-${exerciseIndex}-${i}`;
+        return (
+          <SetRow
+            key={i}
+            set={set}
+            setIndex={i}
+            exerciseIndex={exerciseIndex}
+            dayIndex={dayIndex}
+            weekIndex={weekIndex}
+            logged={logData[key]}
+            onLog={(w, d, e, s, val) => {
+              onLog(w, d, e, s, val);
+              if (val != null && i < exercise.sets.length - 1) {
+                onStartRest();
+              }
+            }}
+            isFirst={i === 0}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+// ─── MAIN APP ────────────────────────────────────────────────
+function ForgeApp() {
+  const [currentWeek, setCurrentWeek] = useState(0);
+  const [currentDay, setCurrentDay] = useState(0);
+  const [activeTab, setActiveTab] = useState("workout"); // workout | program | progress
+  const [logData, setLogData] = useState({});
+  const [showTimer, setShowTimer] = useState(false);
+  const [restSeconds, setRestSeconds] = useState(120);
+  const [loaded, setLoaded] = useState(false);
+  
+  // Load from persistent storage
+  useEffect(() => {
+    (async () => {
+      try {
+        const result = await window.storage.get("forge-log-data");
+        if (result?.value) setLogData(JSON.parse(result.value));
+      } catch {}
+      try {
+        const nav = await window.storage.get("forge-nav");
+        if (nav?.value) {
+          const n = JSON.parse(nav.value);
+          if (n.week != null) setCurrentWeek(n.week);
+          if (n.day != null) setCurrentDay(n.day);
+        }
+      } catch {}
+      setLoaded(true);
+    })();
+  }, []);
+  
+  // Save to persistent storage
+  useEffect(() => {
+    if (!loaded) return;
+    try { window.storage.set("forge-log-data", JSON.stringify(logData)); } catch {}
+  }, [logData, loaded]);
+  
+  useEffect(() => {
+    if (!loaded) return;
+    try { window.storage.set("forge-nav", JSON.stringify({ week: currentWeek, day: currentDay })); } catch {}
+  }, [currentWeek, currentDay, loaded]);
+  
+  const handleLog = useCallback((weekIdx, dayIdx, exIdx, setIdx, repsHit) => {
+    const key = `${weekIdx}-${dayIdx}-${exIdx}-${setIdx}`;
+    setLogData(prev => {
+      const next = { ...prev };
+      if (repsHit == null) delete next[key];
+      else next[key] = { repsHit, timestamp: Date.now() };
+      return next;
+    });
+  }, []);
+  
+  const todayWorkout = PROGRAM[currentWeek]?.days[currentDay];
+  const weekPhase = WEEK_PHASES[currentWeek];
+  const dayLabel = DAY_LABELS[currentDay];
+  
+  // Calculate day completion
+  const dayCompletionPct = useMemo(() => {
+    if (!todayWorkout) return 0;
+    let total = 0, done = 0;
+    todayWorkout.exercises.forEach((ex, ei) => {
+      ex.sets.forEach((_, si) => {
+        total++;
+        if (logData[`${currentWeek}-${currentDay}-${ei}-${si}`]?.repsHit != null) done++;
+      });
+    });
+    return total ? Math.round((done/total)*100) : 0;
+  }, [todayWorkout, currentWeek, currentDay, logData]);
+  
+  // Week overview completion
+  const weekCompletion = useMemo(() => {
+    return PROGRAM[currentWeek]?.days.map((day, di) => {
+      let total = 0, done = 0;
+      day.exercises.forEach((ex, ei) => {
+        ex.sets.forEach((_, si) => {
+          total++;
+          if (logData[`${currentWeek}-${di}-${ei}-${si}`]?.repsHit != null) done++;
+        });
+      });
+      return total ? Math.round((done/total)*100) : 0;
+    }) || [];
+  }, [currentWeek, logData]);
+
+  // Determine progression delta for main lifts
+  const getProgressionDelta = useCallback((exerciseName, weekIdx) => {
+    if (weekIdx === 0 || weekIdx === 6) return null;
+    const step = EXERCISE_PROGRESSION_STEP[exerciseName];
+    if (!step) return null;
+    
+    // Find the first set log of this exercise in the previous week
+    const prevWeek = weekIdx - 1;
+    const prevDay = PROGRAM[prevWeek]?.days;
+    if (!prevDay) return null;
+    
+    for (let di = 0; di < prevDay.length; di++) {
+      for (let ei = 0; ei < prevDay[di].exercises.length; ei++) {
+        const ex = prevDay[di].exercises[ei];
+        if (ex.name === exerciseName && ex.isMain) {
+          const key = `${prevWeek}-${di}-${ei}-0`;
+          const log = logData[key];
+          if (!log) return null;
+          const targetReps = parseInt((ex.sets[0].reps.match(/\d+/) || ["0"])[0], 10);
+          if (log.repsHit > targetReps) return { delta: step, dir: "up" };
+          if (log.repsHit < targetReps) return { delta: -step, dir: "down" };
+          return { delta: 0, dir: "flat" };
+        }
+      }
+    }
+    return null;
+  }, [logData]);
+  
+  const phaseColors = {
+    intro: { bg: "rgba(59,130,246,0.08)", text: "#3B82F6", border: "rgba(59,130,246,0.2)" },
+    accumulate: { bg: "rgba(16,185,129,0.08)", text: "#10B981", border: "rgba(16,185,129,0.2)" },
+    peak: { bg: "rgba(245,158,11,0.08)", text: "#F59E0B", border: "rgba(245,158,11,0.2)" },
+    deload: { bg: "rgba(107,114,128,0.08)", text: "#6B7280", border: "rgba(107,114,128,0.2)" },
+  };
+
+  return (
+    <div style={{
+      "--accent": "#3B82F6", "--accent-bg": "rgba(59,130,246,0.1)", "--accent-dim": "rgba(59,130,246,0.25)",
+      "--accent-red": "#EF4444",
+      "--surface": "#FFFFFF", "--surface-elevated": "rgba(255,255,255,0.95)",
+      "--bg": "#F5F7FA", "--text-primary": "#0F172A", "--text-secondary": "#475569",
+      "--text-tertiary": "#94A3B8", "--border": "rgba(15,23,42,0.08)", "--border-subtle": "rgba(15,23,42,0.04)",
+      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif',
+      background: "var(--bg)", minHeight: "100vh", maxWidth: 480, margin: "0 auto",
+      color: "var(--text-primary)", WebkitFontSmoothing: "antialiased",
+      paddingBottom: 88,
+      paddingTop: "env(safe-area-inset-top)",
+      overscrollBehavior: "none",
+      WebkitTouchCallout: "none",
+      WebkitTapHighlightColor: "transparent",
+      WebkitUserSelect: "none", userSelect: "none",
+      touchAction: "pan-y"
+    }}>
+      
+      {/* ─── HEADER ─── */}
+      <div style={{ padding: "16px 20px 0", position: "sticky", top: 0, zIndex: 50, 
+        background: "var(--bg)", backdropFilter: "blur(20px)" }}>
+        
+        {/* Week selector */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+          <button onClick={() => setCurrentWeek(Math.max(0, currentWeek-1))}
+            disabled={currentWeek === 0}
+            style={{ width: 36, height: 36, borderRadius: 10, border: "1px solid var(--border)", 
+              background: "var(--surface)", display: "flex", alignItems: "center", justifyContent: "center",
+              cursor: "pointer", opacity: currentWeek === 0 ? 0.3 : 1, color: "var(--text-primary)" }}>
+            <Icon name="chevronLeft" size={18}/>
+          </button>
+          
+          <div style={{ textAlign: "center" }}>
+            <div style={{ fontSize: 20, fontWeight: 800, letterSpacing: "-0.02em" }}>
+              Week {currentWeek + 1}
+            </div>
+            <div style={{
+              display: "inline-flex", alignItems: "center", gap: 6, marginTop: 3,
+              fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase",
+              background: phaseColors[weekPhase.phase].bg, color: phaseColors[weekPhase.phase].text,
+              border: `1px solid ${phaseColors[weekPhase.phase].border}`,
+              padding: "3px 10px", borderRadius: 8
+            }}>
+              {weekPhase.label}
+            </div>
+          </div>
+          
+          <button onClick={() => setCurrentWeek(Math.min(6, currentWeek+1))}
+            disabled={currentWeek === 6}
+            style={{ width: 36, height: 36, borderRadius: 10, border: "1px solid var(--border)", 
+              background: "var(--surface)", display: "flex", alignItems: "center", justifyContent: "center",
+              cursor: "pointer", opacity: currentWeek === 6 ? 0.3 : 1, color: "var(--text-primary)" }}>
+            <Icon name="chevronRight" size={18}/>
+          </button>
+        </div>
+        
+        {/* Day Tabs */}
+        <div style={{ display: "flex", gap: 4, overflowX: "auto", paddingBottom: 12, scrollbarWidth: "none" }}>
+          {DAY_LABELS.map((d, i) => {
+            const active = i === currentDay;
+            const pct = weekCompletion[i] || 0;
+            return (
+              <button key={d.key} onClick={() => setCurrentDay(i)}
+                style={{
+                  flex: "0 0 auto", minWidth: 54, padding: "8px 10px", borderRadius: 12,
+                  border: active ? "2px solid var(--accent)" : "1px solid var(--border)",
+                  background: active ? "var(--accent-bg)" : "var(--surface)",
+                  cursor: "pointer", textAlign: "center", position: "relative", overflow: "hidden"
+                }}>
+                {/* Completion fill */}
+                {pct > 0 && (
+                  <div style={{
+                    position: "absolute", bottom: 0, left: 0, width: `${pct}%`, height: 3,
+                    background: pct === 100 ? "var(--accent)" : "var(--border)",
+                    borderRadius: 2, transition: "width 0.3s ease"
+                  }}/>
+                )}
+                <div style={{ fontSize: 10, fontWeight: 700, color: active ? "var(--accent)" : "var(--text-tertiary)", 
+                  letterSpacing: "0.04em" }}>{d.key}</div>
+                <div style={{ fontSize: 11, fontWeight: 600, color: active ? "var(--text-primary)" : "var(--text-secondary)",
+                  marginTop: 1, whiteSpace: "nowrap" }}>{d.label}</div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+      
+      {/* ─── WORKOUT VIEW ─── */}
+      {activeTab === "workout" && todayWorkout && (
+        <div style={{ padding: "0 16px" }}>
+          
+          {/* Day title + progress */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12, padding: "0 4px" }}>
+            <div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: "var(--text-secondary)" }}>
+                {dayLabel.subtitle}
+              </div>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div style={{ width: 80, height: 6, background: "var(--border)", borderRadius: 3, overflow: "hidden" }}>
+                <div style={{ width: `${dayCompletionPct}%`, height: "100%", background: "var(--accent)", 
+                  borderRadius: 3, transition: "width 0.3s ease" }}/>
+              </div>
+              <span style={{ fontSize: 12, fontWeight: 700, color: dayCompletionPct === 100 ? "var(--accent)" : "var(--text-tertiary)",
+                fontVariantNumeric: "tabular-nums" }}>
+                {dayCompletionPct}%
+              </span>
+            </div>
+          </div>
+          
+          {/* Exercises */}
+          {todayWorkout.exercises.map((ex, ei) => {
+            const delta = ex.isMain ? getProgressionDelta(ex.name, currentWeek) : null;
+            return (
+              <div key={ei}>
+                {/* Progression indicator */}
+                {delta && delta.delta !== 0 && (
+                  <div style={{
+                    display: "flex", alignItems: "center", gap: 6, padding: "6px 12px", marginBottom: 4,
+                    borderRadius: 10, fontSize: 12, fontWeight: 600,
+                    background: delta.dir === "up" ? "rgba(16,185,129,0.08)" : "rgba(239,68,68,0.08)",
+                    color: delta.dir === "up" ? "#10B981" : "#EF4444"
+                  }}>
+                    <Icon name={delta.dir === "up" ? "arrowUp" : "arrowDown"} size={14} 
+                      color={delta.dir === "up" ? "#10B981" : "#EF4444"}/>
+                    {delta.dir === "up" ? `+${delta.delta} kg from last week` : `${delta.delta} kg from last week`}
+                  </div>
+                )}
+                <ExerciseBlock
+                  exercise={ex}
+                  exerciseIndex={ei}
+                  dayIndex={currentDay}
+                  weekIndex={currentWeek}
+                  logData={logData}
+                  onLog={handleLog}
+                  onStartRest={() => { setRestSeconds(ex.isMain ? 180 : 120); setShowTimer(true); }}
+                />
+              </div>
+            );
+          })}
+          
+          {/* Reset day button */}
+          {dayCompletionPct > 0 && (
+            <button onClick={() => {
+              const next = { ...logData };
+              todayWorkout.exercises.forEach((ex, ei) => {
+                ex.sets.forEach((_, si) => { delete next[`${currentWeek}-${currentDay}-${ei}-${si}`]; });
+              });
+              setLogData(next);
+            }} style={{
+              width: "100%", padding: "12px", marginTop: 8, borderRadius: 12,
+              border: "1px solid rgba(239,68,68,0.2)", background: "rgba(239,68,68,0.05)",
+              color: "#EF4444", fontSize: 13, fontWeight: 600, cursor: "pointer"
+            }}>
+              Reset Today's Log
+            </button>
+          )}
+          
+          <div style={{ height: 32 }}/>
+        </div>
+      )}
+      
+      {/* ─── PROGRAM OVERVIEW TAB ─── */}
+      {activeTab === "program" && (
+        <div style={{ padding: "0 16px" }}>
+          <div style={{ fontSize: 18, fontWeight: 800, letterSpacing: "-0.02em", marginBottom: 16, padding: "0 4px" }}>
+            Program Overview
+          </div>
+          {WEEK_PHASES.map((phase, wi) => {
+            const p = phaseColors[phase.phase];
+            const totalSets = PROGRAM[wi].days.reduce((a, d) => a + d.exercises.reduce((b, e) => b + e.sets.length, 0), 0);
+            const doneSets = PROGRAM[wi].days.reduce((a, d, di) => 
+              a + d.exercises.reduce((b, e, ei) => 
+                b + e.sets.filter((_, si) => logData[`${wi}-${di}-${ei}-${si}`]?.repsHit != null).length, 0), 0);
+            const pct = totalSets ? Math.round((doneSets/totalSets)*100) : 0;
+            
+            return (
+              <button key={wi} onClick={() => { setCurrentWeek(wi); setActiveTab("workout"); }}
+                style={{
+                  width: "100%", padding: "14px 16px", marginBottom: 8, borderRadius: 14,
+                  border: wi === currentWeek ? `2px solid ${p.text}` : "1px solid var(--border)",
+                  background: "var(--surface)", cursor: "pointer", textAlign: "left",
+                  display: "flex", alignItems: "center", justifyContent: "space-between"
+                }}>
+                <div>
+                  <div style={{ fontSize: 15, fontWeight: 700 }}>Week {wi+1}</div>
+                  <div style={{ fontSize: 12, color: p.text, fontWeight: 600, marginTop: 2 }}>{phase.label}</div>
+                </div>
+                <div style={{ textAlign: "right" }}>
+                  <div style={{ fontSize: 20, fontWeight: 800, fontVariantNumeric: "tabular-nums",
+                    color: pct === 100 ? "var(--accent)" : "var(--text-primary)" }}>{pct}%</div>
+                  <div style={{ fontSize: 11, color: "var(--text-tertiary)" }}>{doneSets}/{totalSets} sets</div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      )}
+      
+      {/* ─── PROGRESS TAB ─── */}
+      {activeTab === "progress" && (
+        <div style={{ padding: "0 16px" }}>
+          <div style={{ fontSize: 18, fontWeight: 800, letterSpacing: "-0.02em", marginBottom: 16, padding: "0 4px" }}>
+            Main Lift Progress
+          </div>
+          {MAIN_LIFTS.filter(name => name !== "Romanian Deadlift").map(name => {
+            const step = EXERCISE_PROGRESSION_STEP[name];
+            const weekData = [];
+            
+            for (let wi = 0; wi < 7; wi++) {
+              const prog = PROGRAM[wi];
+              for (let di = 0; di < prog.days.length; di++) {
+                for (let ei = 0; ei < prog.days[di].exercises.length; ei++) {
+                  const ex = prog.days[di].exercises[ei];
+                  if (ex.name === name && ex.isMain) {
+                    const topSet = ex.sets[0];
+                    const logKey = `${wi}-${di}-${ei}-0`;
+                    weekData.push({
+                      week: wi + 1, weight: topSet.weight, reps: topSet.reps,
+                      targetRPE: topSet.targetRPE,
+                      repsHit: logData[logKey]?.repsHit ?? null
+                    });
+                  }
+                }
+              }
+            }
+            
+            return (
+              <div key={name} style={{
+                background: "var(--surface)", borderRadius: 14, border: "1px solid var(--border)",
+                padding: "14px 16px", marginBottom: 10
+              }}>
+                <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 10 }}>{name}</div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 4 }}>
+                  {weekData.map((d, i) => (
+                    <div key={i} style={{ textAlign: "center" }}>
+                      <div style={{ fontSize: 9, color: "var(--text-tertiary)", fontWeight: 600, marginBottom: 4 }}>W{d.week}</div>
+                      <div style={{
+                        padding: "6px 2px", borderRadius: 8, fontSize: 11, fontWeight: 700,
+                        fontVariantNumeric: "tabular-nums",
+                        background: d.repsHit != null ? "var(--accent-bg)" : "var(--bg)",
+                        color: d.repsHit != null ? "var(--accent)" : "var(--text-tertiary)",
+                        border: `1px solid ${d.repsHit != null ? "var(--accent-dim)" : "var(--border)"}`
+                      }}>
+                        {parseWeight(d.weight).type === "bwplus" ? `+${parseWeight(d.weight).value}` :
+                         parseWeight(d.weight).type === "kg" ? parseWeight(d.weight).value : d.weight}
+                      </div>
+                      {d.repsHit != null && (
+                        <div style={{ fontSize: 10, marginTop: 2, fontWeight: 600,
+                          color: d.repsHit >= parseInt(d.reps) ? "#10B981" : "#EF4444" }}>
+                          {d.repsHit} reps
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+      
+      {/* ─── REST TIMER ─── */}
+      {showTimer && <RestTimer defaultSeconds={restSeconds} onDismiss={() => setShowTimer(false)}/>}
+      
+      {/* ─── BOTTOM NAV ─── */}
+      <div style={{
+        position: "fixed", bottom: 0, left: "50%", transform: "translateX(-50%)",
+        width: "100%", maxWidth: 480, padding: "8px 20px", paddingBottom: "max(8px, env(safe-area-inset-bottom))",
+        background: "rgba(255,255,255,0.92)", backdropFilter: "blur(20px)",
+        borderTop: "1px solid var(--border)", display: "flex", justifyContent: "space-around",
+        zIndex: 90
+      }}>
+        {[
+          { id: "workout", icon: "dumbbell", label: "Workout" },
+          { id: "program", icon: "calendar", label: "Program" },
+          { id: "progress", icon: "chart", label: "Progress" },
+        ].map(tab => (
+          <button key={tab.id} onClick={() => setActiveTab(tab.id)}
+            style={{
+              display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
+              padding: "6px 16px", borderRadius: 12, border: "none",
+              background: activeTab === tab.id ? "var(--accent-bg)" : "transparent",
+              color: activeTab === tab.id ? "var(--accent)" : "var(--text-tertiary)",
+              cursor: "pointer", transition: "all 0.15s ease"
+            }}>
+            <Icon name={tab.icon} size={20} color={activeTab === tab.id ? "var(--accent)" : "var(--text-tertiary)"}/>
+            <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.02em" }}>{tab.label}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(ForgeApp));
+  </script>
+</body>
+</html>
