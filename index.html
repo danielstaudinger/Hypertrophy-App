@@ -1,0 +1,3727 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="FORGE"><meta name="theme-color" content="#0D1117"><title>FORGE</title><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%23A78BFA'/><stop offset='100%25' stop-color='%237C3AED'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='%230D1117'/><text x='50' y='68' text-anchor='middle' font-family='system-ui' font-weight='900' font-size='48' fill='url(%23g)'>F</text></svg>"><style>*{margin:0;padding:0;box-sizing:border-box}html,body,#root{height:100%;width:100%;background:#0D1117}body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent}</style><script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script><script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script></head><body><div id="root"></div><script>window.storage={async get(key){var val=localStorage.getItem('forge_'+key);return val!=null?{key:key,value:val}:null;},async set(key,value){localStorage.setItem('forge_'+key,value);return{key:key,value:value};},async delete(key){localStorage.removeItem('forge_'+key);return{key:key,deleted:true};}};</script><script>
+"use strict";
+
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+var _React = React,
+  useState = _React.useState,
+  useEffect = _React.useEffect,
+  useCallback = _React.useCallback,
+  useRef = _React.useRef,
+  useMemo = _React.useMemo;
+
+// ═══════════════════════════════════════════════════════════════
+// FORGE v3 — Dark Mode, Multi-Plan, Notification Timer
+// Vibrant · Bold Typography · Neumorphism · Motion Design
+// ═══════════════════════════════════════════════════════════════
+
+// ─── EXERCISE DATABASE ──────────────────────────────────────
+var EX_DB = {
+  chest: [{
+    name: "Bench Press",
+    eq: "barbell",
+    step: 2.5,
+    w: "60 kg",
+    r: "6–8"
+  }, {
+    name: "DB Bench Press",
+    eq: "dumbbells",
+    step: 2,
+    w: "24 kg",
+    r: "8–10"
+  }, {
+    name: "Machine Chest Press",
+    eq: "machine",
+    step: 5,
+    w: "50 kg",
+    r: "8–10"
+  }, {
+    name: "Incline DB Press",
+    eq: "dumbbells",
+    step: 1,
+    w: "22 kg",
+    r: "10–12"
+  }, {
+    name: "Incline Barbell Press",
+    eq: "barbell",
+    step: 2.5,
+    w: "50 kg",
+    r: "8–10"
+  }, {
+    name: "Cable Fly (each side)",
+    eq: "cable",
+    step: 1,
+    w: "15 kg",
+    r: "12–15"
+  }, {
+    name: "Pec Deck",
+    eq: "machine",
+    step: 2.5,
+    w: "45 kg",
+    r: "12–15"
+  }, {
+    name: "Weighted Dip",
+    eq: "bodyweight",
+    w: "BW",
+    r: "8–12"
+  }],
+  back: [{
+    name: "Barbell Row",
+    eq: "barbell",
+    step: 2.5,
+    w: "70 kg",
+    r: "6–8"
+  }, {
+    name: "Chest-Supported Row",
+    eq: "machine",
+    step: 2.5,
+    w: "60 kg",
+    r: "8–10"
+  }, {
+    name: "Lat Pulldown",
+    eq: "cable",
+    step: 1,
+    w: "55 kg",
+    r: "8–12"
+  }, {
+    name: "Weighted Pull-Up",
+    eq: "bodyweight",
+    step: 2.5,
+    w: "BW",
+    r: "6–10"
+  }, {
+    name: "Seated Cable Row",
+    eq: "cable",
+    step: 1,
+    w: "50 kg",
+    r: "10–12"
+  }, {
+    name: "T-Bar Row",
+    eq: "barbell",
+    step: 2.5,
+    w: "50 kg",
+    r: "8–10"
+  }, {
+    name: "Straight-Arm Pulldown",
+    eq: "cable",
+    step: 1,
+    w: "25 kg",
+    r: "12–15"
+  }, {
+    name: "Face Pull",
+    eq: "cable",
+    step: 1,
+    w: "20 kg",
+    r: "15–20"
+  }, {
+    name: "Conventional Deadlift",
+    eq: "barbell",
+    step: 5,
+    w: "100 kg",
+    r: "5–6"
+  }],
+  shoulders: [{
+    name: "Barbell OHP",
+    eq: "barbell",
+    step: 2.5,
+    w: "35 kg",
+    r: "6–8"
+  }, {
+    name: "DB Shoulder Press",
+    eq: "dumbbells",
+    step: 1,
+    w: "18 kg",
+    r: "8–10"
+  }, {
+    name: "Machine Shoulder Press",
+    eq: "machine",
+    step: 2.5,
+    w: "40 kg",
+    r: "8–10"
+  }, {
+    name: "Cable Lateral Raise (each)",
+    eq: "cable",
+    step: 1,
+    w: "8 kg",
+    r: "12–15"
+  }, {
+    name: "DB Lateral Raise",
+    eq: "dumbbells",
+    step: 1,
+    w: "10 kg",
+    r: "12–15"
+  }, {
+    name: "Rear Delt Fly (each)",
+    eq: "dumbbells",
+    step: 1,
+    w: "8 kg",
+    r: "15–20"
+  }, {
+    name: "Reverse Pec Deck",
+    eq: "machine",
+    step: 2.5,
+    w: "30 kg",
+    r: "15–20"
+  }],
+  quads: [{
+    name: "Barbell Squat",
+    eq: "barbell",
+    step: 2.5,
+    w: "80 kg",
+    r: "6–8"
+  }, {
+    name: "Front Squat",
+    eq: "barbell",
+    step: 2.5,
+    w: "60 kg",
+    r: "6–8"
+  }, {
+    name: "Leg Press",
+    eq: "machine",
+    step: 5,
+    w: "120 kg",
+    r: "8–12"
+  }, {
+    name: "Hack Squat",
+    eq: "machine",
+    step: 5,
+    w: "80 kg",
+    r: "8–10"
+  }, {
+    name: "Bulgarian Split Squat (each)",
+    eq: "dumbbells",
+    step: 1,
+    w: "16 kg",
+    r: "8–12"
+  }, {
+    name: "Leg Extension",
+    eq: "machine",
+    step: 2.5,
+    w: "40 kg",
+    r: "12–15"
+  }],
+  hamstrings: [{
+    name: "Romanian Deadlift",
+    eq: "barbell",
+    step: 5,
+    w: "80 kg",
+    r: "8–10"
+  }, {
+    name: "Stiff-Leg Deadlift",
+    eq: "barbell",
+    step: 5,
+    w: "70 kg",
+    r: "8–10"
+  }, {
+    name: "Lying Leg Curl",
+    eq: "machine",
+    step: 2.5,
+    w: "30 kg",
+    r: "10–12"
+  }, {
+    name: "Seated Leg Curl",
+    eq: "machine",
+    step: 2.5,
+    w: "35 kg",
+    r: "10–12"
+  }, {
+    name: "Nordic Curl",
+    eq: "bodyweight",
+    w: "BW",
+    r: "6–10"
+  }],
+  glutes: [{
+    name: "Hip Thrust",
+    eq: "barbell",
+    step: 5,
+    w: "80 kg",
+    r: "8–12"
+  }, {
+    name: "Cable Pull-Through",
+    eq: "cable",
+    step: 1,
+    w: "40 kg",
+    r: "12–15"
+  }, {
+    name: "Glute Bridge",
+    eq: "barbell",
+    step: 2.5,
+    w: "60 kg",
+    r: "10–12"
+  }, {
+    name: "45° Back Extension",
+    eq: "bodyweight",
+    w: "BW",
+    r: "10–15"
+  }],
+  biceps: [{
+    name: "Barbell Curl",
+    eq: "barbell",
+    step: 2.5,
+    w: "30 kg",
+    r: "8–12"
+  }, {
+    name: "EZ-Bar Curl",
+    eq: "barbell",
+    step: 2.5,
+    w: "25 kg",
+    r: "8–12"
+  }, {
+    name: "DB Curl",
+    eq: "dumbbells",
+    step: 1,
+    w: "14 kg",
+    r: "10–12"
+  }, {
+    name: "Hammer Curl",
+    eq: "dumbbells",
+    step: 1,
+    w: "12 kg",
+    r: "10–12"
+  }, {
+    name: "Incline DB Curl",
+    eq: "dumbbells",
+    step: 1,
+    w: "10 kg",
+    r: "10–15"
+  }, {
+    name: "Cable Curl",
+    eq: "cable",
+    step: 1,
+    w: "20 kg",
+    r: "12–15"
+  }],
+  triceps: [{
+    name: "Cable Triceps Pushdown",
+    eq: "cable",
+    step: 1,
+    w: "30 kg",
+    r: "10–12"
+  }, {
+    name: "EZ Bar Skull Crushers",
+    eq: "barbell",
+    step: 2.5,
+    w: "25 kg",
+    r: "10–12"
+  }, {
+    name: "Overhead Triceps Ext.",
+    eq: "cable",
+    step: 1,
+    w: "25 kg",
+    r: "10–12"
+  }, {
+    name: "Close-Grip Bench Press",
+    eq: "barbell",
+    step: 2.5,
+    w: "50 kg",
+    r: "8–10"
+  }, {
+    name: "Triceps Kickback",
+    eq: "dumbbells",
+    step: 1,
+    w: "8 kg",
+    r: "12–15"
+  }],
+  calves: [{
+    name: "Standing Calf Raise",
+    eq: "machine",
+    step: 2.5,
+    w: "80 kg",
+    r: "12–15"
+  }, {
+    name: "Seated Calf Raise",
+    eq: "machine",
+    step: 2.5,
+    w: "40 kg",
+    r: "15–20"
+  }, {
+    name: "Leg Press Calf Raise",
+    eq: "machine",
+    step: 2.5,
+    w: "100 kg",
+    r: "12–15"
+  }],
+  abs: [{
+    name: "Cable Crunch",
+    eq: "cable",
+    step: 1,
+    w: "40 kg",
+    r: "12–15"
+  }, {
+    name: "Ab Wheel Rollout",
+    eq: "bodyweight",
+    w: "BW",
+    r: "8–12"
+  }, {
+    name: "Hanging Leg Raise",
+    eq: "bodyweight",
+    w: "BW",
+    r: "10–15"
+  }, {
+    name: "Cable Rope Crunch",
+    eq: "cable",
+    step: 1,
+    w: "35 kg",
+    r: "12–20"
+  }]
+};
+
+// ─── STATUS COLORS ──────────────────────────────────────────
+var SC = {
+  ok: "#48BB78",
+  warn: "#ECC94B",
+  err: "#F56565",
+  ac: "var(--ac)"
+};
+function findMG(name) {
+  for (var _i = 0, _Object$entries = Object.entries(EX_DB); _i < _Object$entries.length; _i++) {
+    var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+      mg = _Object$entries$_i[0],
+      list = _Object$entries$_i[1];
+    if (list.some(function (e) {
+      return e.name === name;
+    })) return mg;
+  }
+  return null;
+}
+function findAlts(name) {
+  var q = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+  var mg = findMG(name);
+  if (!mg) return [];
+  var ql = q.toLowerCase().trim();
+  return EX_DB[mg].filter(function (e) {
+    return e.name !== name && (!ql || e.name.toLowerCase().includes(ql) || e.eq.toLowerCase().includes(ql));
+  });
+}
+
+// ─── PPL PLAN ───────────────────────────────────────────────
+function buildPPL() {
+  var s = function s(reps, weight, rpes) {
+    return rpes.map(function (r) {
+      return {
+        reps: reps,
+        weight: weight,
+        targetRPE: r
+      };
+    });
+  };
+  var w1 = {
+    days: [{
+      label: "Day 1",
+      subtitle: "Push A – Chest",
+      exercises: [{
+        name: "Bench Press",
+        muscleGroup: "chest",
+        isMain: true,
+        equipment: "barbell",
+        progressionStep: 2.5,
+        sets: s("7", "100 kg", [7, 7, 7.5, 8])
+      }, {
+        name: "Incline DB Press",
+        muscleGroup: "chest",
+        progressionStep: 1,
+        sets: s("10–12", "35 kg", [7, 7.5, 8, 8.5])
+      }, {
+        name: "Weighted Dip",
+        muscleGroup: "chest",
+        progressionStep: 2.5,
+        sets: [].concat(_toConsumableArray(s("8–12", "BW + 10 kg", [7, 7.5])), _toConsumableArray(s("10–15", "BW + 10 kg", [8, 8.5])))
+      }, {
+        name: "Cable Fly (each side)",
+        muscleGroup: "chest",
+        progressionStep: 1,
+        sets: s("15–20", "15 kg", [8, 8.5, 9])
+      }, {
+        name: "Cable Triceps Pushdown",
+        muscleGroup: "triceps",
+        progressionStep: 1,
+        sets: s("12–15", "30 kg", [8, 8.5, 9])
+      }, {
+        name: "EZ Bar Skull Crushers",
+        muscleGroup: "triceps",
+        progressionStep: 2.5,
+        sets: s("10–12", "30 kg", [8, 8.5, 9])
+      }, {
+        name: "Cable Lateral Raise (each)",
+        muscleGroup: "shoulders",
+        progressionStep: 1,
+        sets: s("15–20", "10 kg", [8, 8.5, 9])
+      }, {
+        name: "Cable Rope Crunch",
+        muscleGroup: "abs",
+        progressionStep: 1,
+        sets: s("12–20", "40 kg", [8, 8.5, 9])
+      }]
+    }, {
+      label: "Day 2",
+      subtitle: "Pull A – Back + DL",
+      exercises: [{
+        name: "Conventional Deadlift",
+        muscleGroup: "back",
+        isMain: true,
+        equipment: "barbell",
+        progressionStep: 5,
+        sets: s("5", "150 kg", [7, 7, 7.5])
+      }, {
+        name: "Chest-Supported Row",
+        muscleGroup: "back",
+        isMain: true,
+        equipment: "machine",
+        progressionStep: 2.5,
+        sets: [{
+          reps: "7",
+          weight: "82.5 kg",
+          targetRPE: 7
+        }, {
+          reps: "7",
+          weight: "80 kg",
+          targetRPE: 7
+        }, {
+          reps: "7",
+          weight: "80 kg",
+          targetRPE: 7.5
+        }, {
+          reps: "7",
+          weight: "80 kg",
+          targetRPE: 8
+        }]
+      }, {
+        name: "Lat Pulldown",
+        muscleGroup: "back",
+        progressionStep: 2.5,
+        sets: s("10–12", "80 kg", [7, 7.5, 8, 8.5])
+      }, {
+        name: "Seated Cable Row",
+        muscleGroup: "back",
+        progressionStep: 2.5,
+        sets: s("10–12", "75 kg", [7, 7.5, 8, 8.5])
+      }, {
+        name: "EZ-Bar Curl",
+        muscleGroup: "biceps",
+        progressionStep: 2.5,
+        sets: s("10–12", "25 kg", [8, 8.5, 9])
+      }, {
+        name: "Hammer Curl",
+        muscleGroup: "biceps",
+        progressionStep: 1,
+        sets: s("12–15", "14 kg", [8, 8.5, 9])
+      }]
+    }, {
+      label: "Day 3",
+      subtitle: "Legs A – Quad Focus",
+      exercises: [{
+        name: "Front Squat",
+        muscleGroup: "quads",
+        isMain: true,
+        equipment: "barbell",
+        progressionStep: 2.5,
+        sets: [{
+          reps: "5",
+          weight: "82.5 kg",
+          targetRPE: 7
+        }, {
+          reps: "5",
+          weight: "80 kg",
+          targetRPE: 7
+        }, {
+          reps: "5",
+          weight: "80 kg",
+          targetRPE: 7.5
+        }, {
+          reps: "5",
+          weight: "80 kg",
+          targetRPE: 8
+        }]
+      }, {
+        name: "Romanian Deadlift",
+        muscleGroup: "hamstrings",
+        isMain: true,
+        equipment: "barbell",
+        progressionStep: 5,
+        sets: s("10–12", "100 kg", [7, 7.5, 8, 8.5])
+      }, {
+        name: "Leg Press",
+        muscleGroup: "quads",
+        progressionStep: 5,
+        sets: s("10–12", "160 kg", [7, 7.5, 8, 8.5])
+      }, {
+        name: "Leg Extension",
+        muscleGroup: "quads",
+        progressionStep: 2.5,
+        sets: s("15–20", "40 kg", [8, 8.5, 9])
+      }, {
+        name: "Lying Leg Curl",
+        muscleGroup: "hamstrings",
+        progressionStep: 2.5,
+        sets: s("12–15", "30 kg", [8, 8.5, 9])
+      }, {
+        name: "Standing Calf Raise",
+        muscleGroup: "calves",
+        progressionStep: 5,
+        sets: s("15–20", "100 kg", [8, 8.5, 9, 9, 9, 9])
+      }]
+    }, {
+      label: "Day 4",
+      subtitle: "Push B – Shoulder Focus",
+      exercises: [{
+        name: "Barbell OHP",
+        muscleGroup: "shoulders",
+        isMain: true,
+        equipment: "barbell",
+        progressionStep: 2.5,
+        sets: [{
+          reps: "7",
+          weight: "42.5 kg",
+          targetRPE: 7
+        }, {
+          reps: "7",
+          weight: "40 kg",
+          targetRPE: 7
+        }, {
+          reps: "7",
+          weight: "40 kg",
+          targetRPE: 7.5
+        }, {
+          reps: "7",
+          weight: "40 kg",
+          targetRPE: 8
+        }]
+      }, {
+        name: "DB Shoulder Press",
+        muscleGroup: "shoulders",
+        progressionStep: 1,
+        sets: s("10–12", "22 kg", [7, 7.5, 8, 8.5])
+      }, {
+        name: "Incline DB Press",
+        muscleGroup: "chest",
+        progressionStep: 1,
+        sets: s("10–12", "32.5 kg", [7, 7.5, 8, 8.5])
+      }, {
+        name: "Cable Lateral Raise (each)",
+        muscleGroup: "shoulders",
+        sets: s("15–20", "10 kg", [8, 8.5, 9])
+      }, {
+        name: "Face Pull",
+        muscleGroup: "shoulders",
+        progressionStep: 1,
+        sets: s("15–20", "25 kg", [8, 8.5, 9])
+      }, {
+        name: "Weighted Dip",
+        muscleGroup: "triceps",
+        progressionStep: 2.5,
+        sets: s("8–12", "BW + 12.5 kg", [8, 8.5, 9])
+      }, {
+        name: "EZ Bar Skull Crushers",
+        muscleGroup: "triceps",
+        sets: s("10–12", "30 kg", [8, 8.5, 9])
+      }]
+    }, {
+      label: "Day 5",
+      subtitle: "Pull B – Width + Arms",
+      exercises: [{
+        name: "Weighted Pull-Up",
+        muscleGroup: "back",
+        isMain: true,
+        equipment: "bodyweight",
+        progressionStep: 2.5,
+        sets: s("6", "BW + 10 kg", [7, 7, 7.5, 8])
+      }, {
+        name: "Seated Cable Row",
+        muscleGroup: "back",
+        progressionStep: 2.5,
+        sets: s("10–12", "45 kg", [7, 7.5, 8, 8.5])
+      }, {
+        name: "Chest-Supported Row",
+        muscleGroup: "back",
+        progressionStep: 2.5,
+        sets: s("10–12", "70 kg", [7, 7.5, 8, 8.5])
+      }, {
+        name: "Rear Delt Fly (each)",
+        muscleGroup: "shoulders",
+        progressionStep: 1,
+        sets: s("15–20", "12 kg", [8, 8.5, 9])
+      }, {
+        name: "Incline DB Curl",
+        muscleGroup: "biceps",
+        progressionStep: 1,
+        sets: s("10–15", "14 kg", [8, 8.5, 9])
+      }, {
+        name: "Cable Curl",
+        muscleGroup: "biceps",
+        progressionStep: 1,
+        sets: s("12–15", "27.5 kg", [8, 8.5, 9])
+      }, {
+        name: "Face Pull",
+        muscleGroup: "shoulders",
+        sets: s("15–20", "25 kg", [8, 8.5, 9])
+      }, {
+        name: "Ab Wheel Rollout",
+        muscleGroup: "abs",
+        progressionStep: 0,
+        sets: s("8–15", "BW", [8, 8.5, 9])
+      }]
+    }, {
+      label: "Day 6",
+      subtitle: "Legs B – Posterior Chain",
+      exercises: [{
+        name: "Romanian Deadlift",
+        muscleGroup: "hamstrings",
+        isMain: true,
+        equipment: "barbell",
+        progressionStep: 5,
+        sets: [{
+          reps: "7",
+          weight: "105 kg",
+          targetRPE: 7
+        }, {
+          reps: "7",
+          weight: "100 kg",
+          targetRPE: 7
+        }, {
+          reps: "7",
+          weight: "100 kg",
+          targetRPE: 7.5
+        }, {
+          reps: "7",
+          weight: "100 kg",
+          targetRPE: 8
+        }]
+      }, {
+        name: "Hack Squat",
+        muscleGroup: "quads",
+        progressionStep: 5,
+        sets: s("8–12", "100 kg", [7, 7.5, 8, 8.5])
+      }, {
+        name: "45° Back Extension",
+        muscleGroup: "glutes",
+        progressionStep: 2.5,
+        sets: s("10–15", "BW + 10 kg", [7, 7.5, 8, 8.5])
+      }, {
+        name: "Bulgarian Split Squat (each)",
+        muscleGroup: "quads",
+        progressionStep: 1,
+        sets: s("10–12", "24 kg", [8, 8.5, 9])
+      }, {
+        name: "Seated Leg Curl",
+        muscleGroup: "hamstrings",
+        progressionStep: 2.5,
+        sets: s("10–15", "30 kg", [8, 8.5, 9])
+      }, {
+        name: "Seated Calf Raise",
+        muscleGroup: "calves",
+        progressionStep: 2.5,
+        sets: s("15–20", "60 kg", [8, 8.5, 9, 9, 9, 9])
+      }]
+    }]
+  };
+  var ph = [{
+    label: "Submaximal I",
+    phase: "intro"
+  }, {
+    label: "Submaximal II",
+    phase: "intro"
+  }, {
+    label: "Accumulation I",
+    phase: "build"
+  }, {
+    label: "Accumulation II",
+    phase: "build"
+  }, {
+    label: "Peak I",
+    phase: "peak"
+  }, {
+    label: "Peak II",
+    phase: "peak"
+  }, {
+    label: "Deload",
+    phase: "deload"
+  }];
+  // RPE offset per week (added to base RPE of each set)
+  var rpeOff = [0, 0.5, 0.5, 1.0, 1.0, 1.5, -2.0];
+  // Extra sets for main lifts per week (accumulation/peak add sets)
+  var extraMain = [0, 0, 1, 1, 2, 2, 0];
+  // Extra sets for accessories per week
+  var extraAcc = [0, 0, 0, 1, 1, 1, 0];
+  // Weight bump per week for main lifts (kg added to week 1 top set)
+  var mainBumps = {
+    "Bench Press": [0, 2.5, 5, 5, 7.5, 10, 0],
+    "Conventional Deadlift": [0, 5, 5, 7.5, 10, 12.5, 0],
+    "Chest-Supported Row": [0, 2.5, 5, 5, 7.5, 10, 0],
+    "Front Squat": [0, 2.5, 5, 5, 7.5, 10, 0],
+    "Barbell OHP": [0, 2.5, 2.5, 2.5, 5, 5, 0],
+    "Weighted Pull-Up": [0, 2.5, 5, 5, 7.5, 10, 0],
+    "Romanian Deadlift": [0, 2.5, 5, 5, 7.5, 10, 0]
+  };
+  function addKg(wStr, delta) {
+    if (!delta) return wStr;
+    var bwp = wStr.match(/^BW\s*\+\s*([\d.]+)\s*kg$/i);
+    if (bwp) return "BW + ".concat(+(parseFloat(bwp[1]) + delta).toFixed(1), " kg");
+    var kg = wStr.match(/^([\d.]+)\s*kg$/i);
+    if (kg) return "".concat(+(parseFloat(kg[1]) + delta).toFixed(1), " kg");
+    return wStr;
+  }
+  var weeks = [_objectSpread(_objectSpread({}, w1), {}, {
+    phase: ph[0]
+  })];
+  var _loop = function _loop(w) {
+    var wd = JSON.parse(JSON.stringify(w1));
+    wd.phase = ph[w];
+    wd.days.forEach(function (day) {
+      day.exercises.forEach(function (ex) {
+        var isMain = ex.isMain;
+        var bump = isMain && mainBumps[ex.name] ? mainBumps[ex.name][w] : 0;
+        // Apply weight progression (main lifts: planned bumps, accessories: +step every 2 weeks)
+        if (isMain && bump) {
+          ex.sets.forEach(function (set) {
+            set.weight = addKg(set.weight, bump);
+          });
+        } else if (!isMain && ex.progressionStep && w >= 2 && w < 6) {
+          var accBump = ex.progressionStep * Math.min(Math.floor(w / 2), 1);
+          ex.sets.forEach(function (set) {
+            set.weight = addKg(set.weight, accBump);
+          });
+        }
+        // Apply RPE progression (clamped 5–10)
+        ex.sets.forEach(function (set) {
+          set.targetRPE = Math.min(10, Math.max(5, Math.round((set.targetRPE + rpeOff[w]) * 2) / 2));
+        });
+        // Add extra sets for accumulation/peak
+        var extra = isMain ? extraMain[w] : extraAcc[w];
+        if (extra > 0 && ex.sets.length >= 2) {
+          var last = ex.sets[ex.sets.length - 1];
+          for (var i = 0; i < extra; i++) ex.sets.push(_objectSpread(_objectSpread({}, JSON.parse(JSON.stringify(last))), {}, {
+            targetRPE: Math.min(10, last.targetRPE + 0.5)
+          }));
+        }
+        // Deload: cut sets, drop RPE
+        if (w === 6) {
+          ex.sets = ex.sets.slice(0, isMain ? 2 : 1);
+          ex.sets.forEach(function (set) {
+            set.targetRPE = 6;
+          });
+        }
+      });
+    });
+    weeks.push(wd);
+  };
+  for (var w = 1; w < 7; w++) {
+    _loop(w);
+  }
+  return {
+    id: "ppl-6day",
+    name: "PPL 6-Day",
+    subtitle: "Push/Pull/Legs Hypertrophy",
+    weeks: weeks,
+    daysPerWeek: 6,
+    type: "ppl"
+  };
+}
+
+// ─── ICONS ──────────────────────────────────────────────────
+var I = function I(_ref) {
+  var n = _ref.n,
+    _ref$s = _ref.s,
+    sz = _ref$s === void 0 ? 20 : _ref$s,
+    _ref$c = _ref.c,
+    c = _ref$c === void 0 ? "currentColor" : _ref$c;
+  var d = {
+    check: /*#__PURE__*/React.createElement("path", {
+      d: "M20 6L9 17l-5-5",
+      strokeWidth: "2.5",
+      strokeLinecap: "round",
+      strokeLinejoin: "round"
+    }),
+    chevR: /*#__PURE__*/React.createElement("path", {
+      d: "M9 18l6-6-6-6",
+      strokeWidth: "2",
+      strokeLinecap: "round",
+      strokeLinejoin: "round"
+    }),
+    chevL: /*#__PURE__*/React.createElement("path", {
+      d: "M15 18l-6-6 6-6",
+      strokeWidth: "2",
+      strokeLinecap: "round",
+      strokeLinejoin: "round"
+    }),
+    clock: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("circle", {
+      cx: "12",
+      cy: "12",
+      r: "10",
+      strokeWidth: "1.5"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M12 6v6l4 2",
+      strokeWidth: "2",
+      strokeLinecap: "round"
+    })),
+    dumb: /*#__PURE__*/React.createElement("path", {
+      d: "M6.5 6.5h11M4 8.5h2.5v7H4a1 1 0 01-1-1v-5a1 1 0 011-1zm14 0h2a1 1 0 011 1v5a1 1 0 01-1 1h-2v-7z",
+      strokeWidth: "1.5",
+      strokeLinecap: "round"
+    }),
+    cal: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("rect", {
+      x: "3",
+      y: "4",
+      width: "18",
+      height: "18",
+      rx: "2",
+      strokeWidth: "1.5"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M16 2v4M8 2v4M3 10h18",
+      strokeWidth: "1.5"
+    })),
+    chart: /*#__PURE__*/React.createElement("path", {
+      d: "M18 20V10M12 20V4M6 20v-6",
+      strokeWidth: "2",
+      strokeLinecap: "round"
+    }),
+    plus: /*#__PURE__*/React.createElement("path", {
+      d: "M12 5v14M5 12h14",
+      strokeWidth: "2",
+      strokeLinecap: "round"
+    }),
+    x: /*#__PURE__*/React.createElement("path", {
+      d: "M18 6L6 18M6 6l12 12",
+      strokeWidth: "2",
+      strokeLinecap: "round"
+    }),
+    swap: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("path", {
+      d: "M16 3l4 4-4 4",
+      strokeWidth: "2",
+      strokeLinecap: "round",
+      strokeLinejoin: "round"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M20 7H4",
+      strokeWidth: "2",
+      strokeLinecap: "round"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M8 21l-4-4 4-4",
+      strokeWidth: "2",
+      strokeLinecap: "round",
+      strokeLinejoin: "round"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M4 17h16",
+      strokeWidth: "2",
+      strokeLinecap: "round"
+    })),
+    search: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("circle", {
+      cx: "11",
+      cy: "11",
+      r: "7",
+      strokeWidth: "1.5"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M21 21l-4.35-4.35",
+      strokeWidth: "2",
+      strokeLinecap: "round"
+    })),
+    play: /*#__PURE__*/React.createElement("polygon", {
+      points: "5,3 19,12 5,21",
+      strokeWidth: "1.5",
+      strokeLinejoin: "round"
+    }),
+    pause: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("rect", {
+      x: "6",
+      y: "4",
+      width: "4",
+      height: "16",
+      strokeWidth: "1.5",
+      rx: "1"
+    }), /*#__PURE__*/React.createElement("rect", {
+      x: "14",
+      y: "4",
+      width: "4",
+      height: "16",
+      strokeWidth: "1.5",
+      rx: "1"
+    })),
+    edit: /*#__PURE__*/React.createElement("path", {
+      d: "M17 3a2.83 2.83 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z",
+      strokeWidth: "1.5",
+      strokeLinecap: "round",
+      strokeLinejoin: "round"
+    }),
+    trash: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("path", {
+      d: "M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2",
+      strokeWidth: "1.5",
+      strokeLinecap: "round"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6",
+      strokeWidth: "1.5"
+    }))
+  };
+  return /*#__PURE__*/React.createElement("svg", {
+    width: sz,
+    height: sz,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: c,
+    style: {
+      flexShrink: 0
+    }
+  }, d[n] || null);
+};
+
+// ─── REST TIMER with Notification ───────────────────────────
+function RestTimer(_ref2) {
+  var _ref2$sec = _ref2.sec,
+    def = _ref2$sec === void 0 ? 120 : _ref2$sec,
+    onDone = _ref2.onDone;
+  var endTime = useRef(Date.now() + def * 1000);
+  var _useState = useState(def),
+    _useState2 = _slicedToArray(_useState, 2),
+    remaining = _useState2[0],
+    setRemaining = _useState2[1];
+  var _useState3 = useState(false),
+    _useState4 = _slicedToArray(_useState3, 2),
+    paused = _useState4[0],
+    setPaused = _useState4[1];
+  var pausedAt = useRef(null);
+  var notified = useRef(false);
+  useEffect(function () {
+    if ("Notification" in window && Notification.permission === "default") Notification.requestPermission();
+  }, []);
+  useEffect(function () {
+    if (paused) return;
+    var tick = function tick() {
+      var left = Math.max(0, Math.ceil((endTime.current - Date.now()) / 1000));
+      setRemaining(left);
+      if (left <= 0 && !notified.current) {
+        notified.current = true;
+        try {
+          var ac = new (window.AudioContext || window.webkitAudioContext)();
+          var o = ac.createOscillator();
+          var g = ac.createGain();
+          o.connect(g);
+          g.connect(ac.destination);
+          o.frequency.value = 880;
+          g.gain.value = 0.3;
+          o.start();
+          o.stop(ac.currentTime + 0.15);
+          setTimeout(function () {
+            var o2 = ac.createOscillator();
+            var g2 = ac.createGain();
+            o2.connect(g2);
+            g2.connect(ac.destination);
+            o2.frequency.value = 1100;
+            g2.gain.value = 0.3;
+            o2.start();
+            o2.stop(ac.currentTime + 0.2);
+          }, 200);
+        } catch (e) {}
+        if ("Notification" in window && Notification.permission === "granted") try {
+          new Notification("FORGE", {
+            body: "Rest done — time to lift!"
+          });
+        } catch (e) {}
+        if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+        setTimeout(function () {
+          onDone();
+        }, 5000);
+      }
+    };
+    tick();
+    var id = setInterval(tick, 250);
+    return function () {
+      return clearInterval(id);
+    };
+  }, [paused]);
+  var togglePause = function togglePause() {
+    if (paused) {
+      endTime.current = Date.now() + pausedAt.current * 1000;
+      setPaused(false);
+    } else {
+      pausedAt.current = remaining;
+      setPaused(true);
+    }
+  };
+  var s = remaining;
+  var pct = (def - s) / def * 100;
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "fixed",
+      bottom: 90,
+      left: "50%",
+      transform: "translateX(-50%)",
+      background: "rgba(15,15,25,0.92)",
+      backdropFilter: "blur(24px) saturate(180%)",
+      borderRadius: 24,
+      padding: "14px 20px",
+      display: "flex",
+      alignItems: "center",
+      gap: 14,
+      boxShadow: "0 8px 40px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.06)",
+      border: "1px solid rgba(255,255,255,0.06)",
+      zIndex: 100,
+      minWidth: 260,
+      color: "#fff",
+      animation: "slideUp .3s cubic-bezier(.16,1,.3,1)"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "relative",
+      width: 44,
+      height: 44
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: 44,
+    height: 44,
+    style: {
+      transform: "rotate(-90deg)"
+    }
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: 22,
+    cy: 22,
+    r: 18,
+    fill: "none",
+    stroke: "rgba(255,255,255,0.08)",
+    strokeWidth: 3
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: 22,
+    cy: 22,
+    r: 18,
+    fill: "none",
+    stroke: s <= 10 ? "#FF6B6B" : "#A78BFA",
+    strokeWidth: 3,
+    strokeDasharray: 113,
+    strokeDashoffset: 113 - pct / 100 * 113,
+    strokeLinecap: "round",
+    style: {
+      transition: "stroke-dashoffset 0.3s linear"
+    }
+  })), /*#__PURE__*/React.createElement("span", {
+    style: {
+      position: "absolute",
+      inset: 0,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: 14,
+      fontWeight: 800,
+      fontVariantNumeric: "tabular-nums",
+      color: s <= 0 ? "#A78BFA" : "#fff"
+    }
+  }, Math.floor(s / 60), ":", (s % 60).toString().padStart(2, "0"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11,
+      opacity: 0.7,
+      fontWeight: 700,
+      letterSpacing: "0.1em",
+      textTransform: "uppercase"
+    }
+  }, "REST"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 14,
+      opacity: 0.8,
+      fontWeight: 600
+    }
+  }, s <= 0 ? "Time to lift!" : paused ? "Paused" : "Recovering...")), /*#__PURE__*/React.createElement("button", {
+    "aria-label": "Pause timer",
+    onClick: togglePause,
+    style: {
+      width: 44,
+      height: 44,
+      borderRadius: 12,
+      border: "1px solid rgba(255,255,255,0.1)",
+      background: "rgba(255,255,255,0.06)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      cursor: "pointer",
+      color: "#fff"
+    }
+  }, /*#__PURE__*/React.createElement(I, {
+    n: paused ? "play" : "pause",
+    s: 16,
+    c: "#fff"
+  })), /*#__PURE__*/React.createElement("button", {
+    "aria-label": "Dismiss timer",
+    onClick: onDone,
+    style: {
+      width: 44,
+      height: 44,
+      borderRadius: 12,
+      border: "1px solid rgba(255,255,255,0.06)",
+      background: "rgba(255,255,255,0.03)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      cursor: "pointer",
+      color: "rgba(255,255,255,0.4)"
+    }
+  }, /*#__PURE__*/React.createElement(I, {
+    n: "x",
+    s: 16,
+    c: "rgba(255,255,255,0.4)"
+  })));
+}
+
+// ─── SET ROW ────────────────────────────────────────────────
+function SetRow(_ref3) {
+  var set = _ref3.set,
+    si = _ref3.si,
+    ei = _ref3.ei,
+    di = _ref3.di,
+    wi = _ref3.wi,
+    logged = _ref3.logged,
+    onLog = _ref3.onLog,
+    onWeight = _ref3.onWeight;
+  var done = (logged === null || logged === void 0 ? void 0 : logged.repsHit) != null;
+  var target = parseInt((set.reps.match(/\d+/) || ["0"])[0], 10);
+  var _useState5 = useState(done ? logged.repsHit : target),
+    _useState6 = _slicedToArray(_useState5, 2),
+    sel = _useState6[0],
+    setSel = _useState6[1];
+  var _useState7 = useState(false),
+    _useState8 = _slicedToArray(_useState7, 2),
+    editW = _useState8[0],
+    setEditW = _useState8[1];
+  // Parse weight into display parts
+  var wRaw = set.weight || "";
+  var isEmpty = !wRaw;
+  var isBW = wRaw === "BW";
+  var isBWPlus = /^BW\s*\+\s*([\d.]+)\s*kg$/i.test(wRaw);
+  var bwPlusVal = isBWPlus ? (wRaw.match(/\+\s*([\d.]+)/) || ["", "0"])[1] : "";
+  var displayW = wRaw.replace(/\s*kg$/i, "").trim();
+  var _useState9 = useState(isBWPlus ? bwPlusVal : displayW),
+    _useState0 = _slicedToArray(_useState9, 2),
+    wVal = _useState0[0],
+    setWVal = _useState0[1];
+  useEffect(function () {
+    done ? setSel(logged.repsHit) : setSel(target);
+  }, [done, logged === null || logged === void 0 ? void 0 : logged.repsHit, target]);
+  useEffect(function () {
+    var w = set.weight || "";
+    var bwp = /^BW\s*\+\s*([\d.]+)\s*kg$/i.test(w);
+    setWVal(bwp ? (w.match(/\+\s*([\d.]+)/) || ["", "0"])[1] : w.replace(/\s*kg$/i, "").trim());
+  }, [set.weight]);
+  var mod = sel !== target;
+  var _useState1 = useState(""),
+    _useState10 = _slicedToArray(_useState1, 2),
+    wWarn = _useState10[0],
+    setWWarn = _useState10[1];
+  var commitWeight = function commitWeight() {
+    var v = wVal.trim();
+    if (!v) {
+      setEditW(false);
+      setWWarn("");
+      return;
+    }
+    var num = parseFloat(v);
+    if (isNaN(num) || num < 0) {
+      setEditW(false);
+      setWWarn("");
+      return;
+    }
+    if (num > 300) {
+      setWWarn("Over 300 kg — check value");
+      return;
+    }
+    setWWarn("");
+    var newW = isBWPlus ? "BW + ".concat(v, " kg") : "".concat(v, " kg");
+    if (newW !== set.weight) onWeight(wi, di, ei, si, newW);
+    setEditW(false);
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 6,
+      padding: "10px 0",
+      borderTop: si > 0 ? "1px solid rgba(255,255,255,0.04)" : "none",
+      opacity: done ? 0.5 : 1,
+      transition: "all .25s cubic-bezier(.16,1,.3,1)"
+    }
+  }, isBW ? /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 15,
+      fontWeight: 700,
+      color: "var(--t2)"
+    }
+  }, "BW") : isEmpty && !editW ? /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setEditW(true);
+    },
+    style: {
+      background: "none",
+      border: "none",
+      cursor: "pointer",
+      padding: 0
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 15,
+      fontWeight: 700,
+      color: "var(--ac)",
+      borderBottom: "1px dashed rgba(167,139,250,0.4)"
+    }
+  }, "+ kg")) : editW ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 2
+    }
+  }, isBWPlus && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 15,
+      fontWeight: 700,
+      color: "var(--t2)"
+    }
+  }, "BW +"), /*#__PURE__*/React.createElement("input", {
+    value: wVal,
+    onChange: function onChange(e) {
+      return setWVal(e.target.value);
+    },
+    onBlur: commitWeight,
+    onKeyDown: function onKeyDown(e) {
+      if (e.key === "Enter") commitWeight();
+    },
+    autoFocus: true,
+    placeholder: "0",
+    style: {
+      width: 60,
+      fontSize: 15,
+      fontWeight: 700,
+      color: "var(--ac)",
+      background: "rgba(167,139,250,0.08)",
+      border: "1.5px solid rgba(167,139,250,0.3)",
+      borderRadius: 8,
+      padding: "4px 10px",
+      textAlign: "center",
+      outline: "none",
+      fontFamily: "inherit",
+      fontVariantNumeric: "tabular-nums"
+    }
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 13,
+      color: "var(--t3)"
+    }
+  }, "kg"), wWarn && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 10,
+      color: SC.warn,
+      marginLeft: 4
+    }
+  }, wWarn)) : /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setEditW(true);
+    },
+    style: {
+      background: "none",
+      border: "none",
+      cursor: "pointer",
+      padding: 0,
+      display: "flex",
+      alignItems: "center",
+      gap: 2
+    }
+  }, isBWPlus && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 15,
+      fontWeight: 700,
+      color: "var(--t2)"
+    }
+  }, "BW +"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 15,
+      fontWeight: 700,
+      color: "var(--t1)",
+      fontVariantNumeric: "tabular-nums",
+      borderBottom: "1px dashed rgba(255,255,255,0.25)"
+    }
+  }, wVal), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 13,
+      color: "var(--t3)"
+    }
+  }, "kg")), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 14,
+      color: "var(--t3)",
+      fontWeight: 600,
+      flexShrink: 0
+    }
+  }, "\xD7"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 15,
+      fontWeight: 600,
+      color: "var(--t2)",
+      fontVariantNumeric: "tabular-nums",
+      flexShrink: 0
+    }
+  }, set.reps), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 13,
+      fontWeight: 700,
+      color: "var(--t3)",
+      fontVariantNumeric: "tabular-nums",
+      background: "rgba(255,255,255,0.04)",
+      padding: "4px 8px",
+      borderRadius: 6,
+      flexShrink: 0,
+      whiteSpace: "nowrap"
+    }
+  }, "RPE ", set.targetRPE), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }), /*#__PURE__*/React.createElement("select", {
+    value: sel,
+    onChange: function onChange(e) {
+      return setSel(+e.target.value);
+    },
+    disabled: done,
+    style: {
+      width: 56,
+      height: 44,
+      borderRadius: 11,
+      fontSize: 16,
+      fontWeight: 800,
+      textAlign: "center",
+      border: done ? "2px solid var(--ac)" : mod ? "2px solid rgba(167,139,250,0.4)" : "1.5px dashed rgba(255,255,255,0.1)",
+      background: done ? "rgba(167,139,250,0.15)" : mod ? "rgba(167,139,250,0.06)" : "rgba(255,255,255,0.03)",
+      color: done || mod ? "var(--ac)" : "var(--t3)",
+      cursor: done ? "default" : "pointer",
+      appearance: "none",
+      WebkitAppearance: "none",
+      fontVariantNumeric: "tabular-nums",
+      opacity: done ? 1 : mod ? 1 : 0.5,
+      transition: "all .2s ease",
+      flexShrink: 0
+    }
+  }, Array.from({
+    length: 31
+  }, function (_, i) {
+    return /*#__PURE__*/React.createElement("option", {
+      key: i,
+      value: i
+    }, i);
+  })), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return done ? onLog(wi, di, ei, si, null) : onLog(wi, di, ei, si, sel);
+    },
+    style: _objectSpread({
+      width: 44,
+      height: 44,
+      borderRadius: 11,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      background: done ? "var(--ac)" : "transparent",
+      border: done ? "none" : "1.5px dashed rgba(255,255,255,0.1)",
+      color: done ? "#fff" : "var(--t3)",
+      cursor: "pointer",
+      padding: 0,
+      WebkitTapHighlightColor: "transparent",
+      transition: "all .2s cubic-bezier(.16,1,.3,1)",
+      flexShrink: 0
+    }, done ? {
+      boxShadow: "0 2px 12px rgba(167,139,250,0.3)"
+    } : {})
+  }, /*#__PURE__*/React.createElement(I, {
+    n: "check",
+    s: 15,
+    c: done ? "#fff" : "var(--t3)"
+  })));
+}
+
+// ─── EXERCISE BLOCK ─────────────────────────────────────────
+function ExBlock(_ref4) {
+  var ex = _ref4.ex,
+    ei = _ref4.ei,
+    di = _ref4.di,
+    wi = _ref4.wi,
+    log = _ref4.log,
+    _onLog = _ref4.onLog,
+    onRest = _ref4.onRest,
+    onSwap = _ref4.onSwap,
+    onWeight = _ref4.onWeight,
+    onAllDone = _ref4.onAllDone;
+  var _useState11 = useState(false),
+    _useState12 = _slicedToArray(_useState11, 2),
+    showSwap = _useState12[0],
+    setShowSwap = _useState12[1];
+  var _useState13 = useState(""),
+    _useState14 = _slicedToArray(_useState13, 2),
+    q = _useState14[0],
+    setQ = _useState14[1];
+  var alts = useMemo(function () {
+    return findAlts(ex.name, q);
+  }, [ex.name, q]);
+  var done = ex.sets.filter(function (_, i) {
+    var _log;
+    return ((_log = log["".concat(wi, "-").concat(di, "-").concat(ei, "-").concat(i)]) === null || _log === void 0 ? void 0 : _log.repsHit) != null;
+  }).length;
+  var all = done === ex.sets.length;
+  var isActive = done > 0 && !all || ei === 0 && done === 0;
+  var pctEx = ex.sets.length ? Math.round(done / ex.sets.length * 100) : 0;
+  var cardBg = all ? "rgba(72,187,120,0.06)" : isActive ? "rgba(167,139,250,0.06)" : "rgba(255,255,255,0.02)";
+  var cardBorder = all ? "1px solid rgba(72,187,120,0.25)" : isActive ? "1px solid rgba(167,139,250,0.2)" : "1px solid rgba(255,255,255,0.06)";
+  return /*#__PURE__*/React.createElement("div", {
+    "data-exblock": ei,
+    style: {
+      display: "flex",
+      borderRadius: 16,
+      marginBottom: 14,
+      overflow: "hidden",
+      transition: "all .3s ease"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 5,
+      flexShrink: 0,
+      display: "flex",
+      flexDirection: "column",
+      gap: 2,
+      padding: "2px 0",
+      background: "transparent"
+    }
+  }, ex.sets.map(function (_, si) {
+    var _log2;
+    var setDone = !!((_log2 = log["".concat(wi, "-").concat(di, "-").concat(ei, "-").concat(si)]) !== null && _log2 !== void 0 && _log2.repsHit);
+    var fillColor = setDone ? all ? SC.ok : "var(--ac)" : "rgba(255,255,255,0.08)";
+    return /*#__PURE__*/React.createElement("div", {
+      key: si,
+      style: {
+        flex: 1,
+        borderRadius: 2,
+        position: "relative",
+        overflow: "hidden",
+        background: "rgba(255,255,255,0.08)"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        borderRadius: 2,
+        background: fillColor,
+        transformOrigin: "top",
+        transform: setDone ? "scaleY(1)" : "scaleY(0)",
+        transition: "transform .4s ease-in"
+      }
+    }));
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      background: cardBg,
+      border: cardBorder,
+      borderLeft: "none",
+      borderRadius: "0 16px 16px 0",
+      padding: "12px 14px",
+      backdropFilter: "blur(8px)"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "flex-start",
+      marginBottom: 6
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 8,
+      flexWrap: "wrap"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 16,
+      fontWeight: 800,
+      color: all ? SC.ok : "var(--t1)",
+      letterSpacing: "-0.01em"
+    }
+  }, ex.name), ex.isMain && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 12,
+      fontWeight: 800,
+      letterSpacing: "0.1em",
+      background: "rgba(167,139,250,0.15)",
+      color: "var(--ac)",
+      padding: "2px 8px",
+      borderRadius: 6
+    }
+  }, "MAIN")), ex.muscleGroup && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 13,
+      color: "var(--t3)",
+      marginTop: 2,
+      textTransform: "capitalize"
+    }
+  }, ex.muscleGroup, ex.equipment ? " \xB7 ".concat(ex.equipment) : "")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 6
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      setShowSwap(!showSwap);
+      setQ("");
+    },
+    style: {
+      width: 44,
+      height: 44,
+      borderRadius: 10,
+      border: "none",
+      background: showSwap ? "rgba(167,139,250,0.1)" : "transparent",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      cursor: "pointer"
+    }
+  }, /*#__PURE__*/React.createElement(I, {
+    n: "edit",
+    s: 16,
+    c: showSwap ? "var(--ac)" : "var(--t3)"
+  })))), showSwap && /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "rgba(0,0,0,0.2)",
+      borderRadius: 14,
+      padding: 12,
+      marginBottom: 10,
+      border: "1px solid rgba(255,255,255,0.05)"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 8,
+      marginBottom: 10,
+      background: "rgba(255,255,255,0.04)",
+      borderRadius: 10,
+      padding: "8px 12px",
+      border: "1px solid rgba(255,255,255,0.06)"
+    }
+  }, /*#__PURE__*/React.createElement(I, {
+    n: "search",
+    s: 16,
+    c: "var(--t3)"
+  }), /*#__PURE__*/React.createElement("input", {
+    value: q,
+    onChange: function onChange(e) {
+      return setQ(e.target.value);
+    },
+    placeholder: "Search exercises...",
+    style: {
+      flex: 1,
+      background: "transparent",
+      border: "none",
+      outline: "none",
+      color: "var(--t1)",
+      fontSize: 13,
+      fontWeight: 500,
+      fontFamily: "inherit"
+    }
+  }), q && /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setQ("");
+    },
+    style: {
+      background: "none",
+      border: "none",
+      cursor: "pointer",
+      padding: 0
+    }
+  }, /*#__PURE__*/React.createElement(I, {
+    n: "x",
+    s: 14,
+    c: "var(--t3)"
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      maxHeight: 200,
+      overflowY: "auto",
+      display: "flex",
+      flexDirection: "column",
+      gap: 4
+    }
+  }, alts.length === 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      color: "var(--t3)",
+      textAlign: "center",
+      padding: 12
+    }
+  }, "No matches"), alts.map(function (a) {
+    return /*#__PURE__*/React.createElement("button", {
+      key: a.name,
+      onClick: function onClick() {
+        onSwap(wi, di, ei, a);
+        setShowSwap(false);
+      },
+      style: {
+        padding: "10px 12px",
+        borderRadius: 10,
+        border: "1px solid rgba(255,255,255,0.06)",
+        background: "rgba(255,255,255,0.03)",
+        cursor: "pointer",
+        textAlign: "left",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        color: "var(--t1)"
+      }
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 14,
+        fontWeight: 600
+      }
+    }, a.name), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 13,
+        color: "var(--t3)"
+      }
+    }, a.eq, " \xB7 ", a.r)), /*#__PURE__*/React.createElement(I, {
+      n: "chevR",
+      s: 14,
+      c: "var(--t3)"
+    }));
+  }))), ex.sets.map(function (set, i) {
+    var key = "".concat(wi, "-").concat(di, "-").concat(ei, "-").concat(i);
+    return /*#__PURE__*/React.createElement(SetRow, {
+      key: i,
+      set: set,
+      si: i,
+      ei: ei,
+      di: di,
+      wi: wi,
+      logged: log[key],
+      onLog: function onLog(w, d, e, s, v, rpe) {
+        _onLog(w, d, e, s, v, rpe);
+        if (v != null && !rpe) {
+          if (i < ex.sets.length - 1) onRest();else {
+            setTimeout(function () {
+              var cards = document.querySelectorAll("[data-exblock]");
+              var next = cards[ei + 1];
+              if (next) next.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+              });
+            }, 300);
+            var newDone = ex.sets.filter(function (_2, i2) {
+              var _log3;
+              return i2 < i ? ((_log3 = log["".concat(wi, "-").concat(di, "-").concat(ei, "-").concat(i2)]) === null || _log3 === void 0 ? void 0 : _log3.repsHit) != null : i2 === i;
+            }).length + 1;
+            if (newDone === ex.sets.length && onAllDone) setTimeout(onAllDone, 600);
+          }
+        }
+      },
+      onWeight: onWeight
+    });
+  })));
+}
+
+// ─── EMPTY PLAN BUILDER (with focus, evidence-based gender) ─
+function buildEmptyPlan(name, days, gender, focus) {
+  focus = focus || "balanced";
+  var pick = function pick(mg, idx) {
+    var list = EX_DB[mg];
+    return list ? list[idx % list.length] : null;
+  };
+  // All targets ~90 min: 5 compounds + 4 isolations = 9 exercises
+  // Focus shifts the muscle group SELECTION, not the total count
+  var templates = {
+    balanced: {
+      compounds: ["chest", "back", "quads", "hamstrings", "shoulders"],
+      isolations: ["biceps", "triceps", "calves", "abs"]
+    },
+    upper: {
+      compounds: ["chest", "back", "shoulders", "chest", "back"],
+      isolations: ["biceps", "triceps", "shoulders", "abs"]
+    },
+    lower: {
+      compounds: ["quads", "hamstrings", "glutes", "back", "shoulders"],
+      isolations: ["quads", "hamstrings", "calves", "abs"]
+    },
+    strength: {
+      compounds: ["chest", "back", "quads", "hamstrings", "shoulders"],
+      isolations: ["biceps", "triceps", "abs"]
+    }
+  };
+  var tmpl = templates[focus] || templates.balanced;
+  // Gender: both train everything. Only +1 set on a few accessories (Roberts et al. 2020)
+  var genderExtraIso = gender === "female" ? ["glutes", "hamstrings"] : ["chest", "shoulders"];
+  function makeDay(dayIdx) {
+    var exercises = [];
+    tmpl.compounds.forEach(function (mg, i) {
+      var list = EX_DB[mg];
+      if (!list) return;
+      var ex = list[(dayIdx + i) % list.length];
+      if (!ex) return;
+      var nSets = focus === "strength" ? 4 : 3;
+      var baseRPE = focus === "strength" ? 6.5 : 7;
+      exercises.push({
+        name: ex.name,
+        muscleGroup: mg,
+        isMain: !!ex.step,
+        equipment: ex.eq,
+        progressionStep: ex.step || 0,
+        sets: Array.from({
+          length: nSets
+        }, function (_, si) {
+          return {
+            reps: focus === "strength" ? ex.r.includes("\u2013") ? ex.r.split("\u2013")[0] : ex.r : ex.r,
+            weight: "",
+            targetRPE: Math.min(10, baseRPE + si * 0.5)
+          };
+        })
+      });
+    });
+    tmpl.isolations.forEach(function (mg, i) {
+      var list = EX_DB[mg];
+      if (!list) return;
+      var ex = list[(dayIdx + i + 2) % list.length];
+      var hasExtra = genderExtraIso.includes(mg);
+      var nSets = hasExtra ? 3 : 2;
+      exercises.push({
+        name: ex.name,
+        muscleGroup: mg,
+        isMain: false,
+        equipment: ex.eq,
+        progressionStep: ex.step || 0,
+        sets: Array.from({
+          length: nSets
+        }, function (_, si) {
+          return {
+            reps: ex.r,
+            weight: "",
+            targetRPE: 8 + si * 0.5
+          };
+        })
+      });
+    });
+    var labels = {
+      balanced: "Full Body",
+      upper: "Upper Focus",
+      lower: "Lower Focus",
+      strength: "Strength"
+    };
+    return {
+      label: "Day " + (dayIdx + 1),
+      subtitle: labels[focus] || "Full Body",
+      exercises: exercises
+    };
+  }
+  var ph = [{
+    label: "Intro",
+    phase: "intro"
+  }, {
+    label: "Build I",
+    phase: "build"
+  }, {
+    label: "Build II",
+    phase: "build"
+  }, {
+    label: "Peak",
+    phase: "peak"
+  }, {
+    label: "Overreach",
+    phase: "overreach"
+  }, {
+    label: "Deload",
+    phase: "deload"
+  }];
+  var rpeOff = [0, 0.5, 1.0, 1.0, 1.5, -2.0];
+  var extraMain = [0, 0, 1, 1, 2, 0];
+  var week1Days = [];
+  for (var d = 0; d < days; d++) week1Days.push(makeDay(d));
+  var weeks = [];
+  var _loop2 = function _loop2(w) {
+    var wd = JSON.parse(JSON.stringify(week1Days));
+    wd.forEach(function (day) {
+      return day.exercises.forEach(function (ex) {
+        ex.sets.forEach(function (set) {
+          set.targetRPE = Math.min(10, Math.max(5, Math.round((set.targetRPE + rpeOff[w]) * 2) / 2));
+        });
+        var extra = ex.isMain ? extraMain[w] : 0;
+        if (extra > 0 && ex.sets.length >= 2) {
+          var last = ex.sets[ex.sets.length - 1];
+          for (var i = 0; i < extra; i++) ex.sets.push(_objectSpread(_objectSpread({}, JSON.parse(JSON.stringify(last))), {}, {
+            targetRPE: Math.min(10, last.targetRPE + 0.5)
+          }));
+        }
+        if (w === 5) {
+          ex.sets = ex.sets.slice(0, ex.isMain ? 2 : 1);
+          ex.sets.forEach(function (set) {
+            set.targetRPE = 6;
+          });
+        }
+      });
+    });
+    weeks.push({
+      days: wd,
+      phase: ph[w]
+    });
+  };
+  for (var w = 0; w < 6; w++) {
+    _loop2(w);
+  }
+  var focusLabels = {
+    balanced: "Balanced",
+    upper: "Upper Body Focus",
+    lower: "Lower Body Focus",
+    strength: "Strength Focus"
+  };
+  return {
+    id: "plan-" + Date.now(),
+    name: name,
+    subtitle: focusLabels[focus] || "Balanced",
+    weeks: weeks,
+    daysPerWeek: days,
+    gender: gender,
+    focus: focus,
+    type: "fullbody"
+  };
+}
+
+// ─── WIZARD OVERLAY (4 steps: Name → Days → Focus → Gender) ─
+function WizardOverlay(_ref5) {
+  var onClose = _ref5.onClose,
+    onCreate = _ref5.onCreate;
+  var _useState15 = useState(0),
+    _useState16 = _slicedToArray(_useState15, 2),
+    step = _useState16[0],
+    setStep = _useState16[1];
+  var _useState17 = useState(""),
+    _useState18 = _slicedToArray(_useState17, 2),
+    name = _useState18[0],
+    setName = _useState18[1];
+  var _useState19 = useState(3),
+    _useState20 = _slicedToArray(_useState19, 2),
+    days = _useState20[0],
+    setDays = _useState20[1];
+  var _useState21 = useState("balanced"),
+    _useState22 = _slicedToArray(_useState21, 2),
+    focus = _useState22[0],
+    setFocus = _useState22[1];
+  var _useState23 = useState(null),
+    _useState24 = _slicedToArray(_useState23, 2),
+    gender = _useState24[0],
+    setGender = _useState24[1];
+  var maxStep = 3;
+  var canNext = step === 0 ? name.trim().length > 0 : step === 1 ? true : step === 2 ? true : step === 3 ? !!gender : false;
+  var handleNext = function handleNext() {
+    if (step < maxStep) setStep(step + 1);else if (gender) onCreate(name.trim() || "New Plan", days, gender, focus);
+  };
+  var inputStyle = {
+    width: "100%",
+    padding: "12px 14px",
+    borderRadius: 12,
+    border: "1px solid var(--bd)",
+    background: "rgba(255,255,255,0.04)",
+    color: "var(--t1)",
+    fontSize: 15,
+    fontWeight: 600,
+    fontFamily: "inherit",
+    outline: "none"
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "fixed",
+      inset: 0,
+      background: "rgba(0,0,0,0.7)",
+      backdropFilter: "blur(12px)",
+      zIndex: 200,
+      display: "flex",
+      alignItems: "flex-end",
+      justifyContent: "center",
+      animation: "fadeIn .2s ease"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: "100%",
+      maxWidth: 480,
+      background: "#161B22",
+      borderRadius: "24px 24px 0 0",
+      padding: 28,
+      paddingBottom: "max(28px, env(safe-area-inset-bottom))",
+      boxShadow: "0 -8px 40px rgba(0,0,0,0.5)"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 6,
+      marginBottom: 20
+    }
+  }, [0, 1, 2, 3].map(function (i) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        flex: 1,
+        height: 3,
+        borderRadius: 2,
+        background: i <= step ? "var(--ac)" : "rgba(255,255,255,0.08)",
+        transition: "background .3s ease"
+      }
+    });
+  })), step === 0 && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      fontWeight: 800,
+      letterSpacing: "0.1em",
+      textTransform: "uppercase",
+      color: "var(--t3)",
+      marginBottom: 6
+    }
+  }, "Step 1 of 4"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 20,
+      fontWeight: 900,
+      letterSpacing: "-0.02em",
+      marginBottom: 6
+    }
+  }, "Name your plan"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 13,
+      color: "var(--t2)",
+      marginBottom: 20,
+      lineHeight: 1.5
+    }
+  }, "Give your training plan a name."), /*#__PURE__*/React.createElement("input", {
+    value: name,
+    onChange: function onChange(e) {
+      return setName(e.target.value);
+    },
+    placeholder: "e.g. Summer Hypertrophy",
+    autoFocus: true,
+    onKeyDown: function onKeyDown(e) {
+      if (e.key === "Enter" && canNext) handleNext();
+    },
+    style: _objectSpread(_objectSpread({}, inputStyle), {}, {
+      marginBottom: 4
+    })
+  })), step === 1 && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      fontWeight: 800,
+      letterSpacing: "0.1em",
+      textTransform: "uppercase",
+      color: "var(--t3)",
+      marginBottom: 6
+    }
+  }, "Step 2 of 4"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 20,
+      fontWeight: 900,
+      letterSpacing: "-0.02em",
+      marginBottom: 6
+    }
+  }, "Days per week"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 13,
+      color: "var(--t2)",
+      marginBottom: 20,
+      lineHeight: 1.5
+    }
+  }, "Sessions are ~90 min. All options train every muscle group."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 8
+    }
+  }, [3, 4, 5, 6].map(function (d) {
+    return /*#__PURE__*/React.createElement("button", {
+      key: d,
+      onClick: function onClick() {
+        return setDays(d);
+      },
+      style: {
+        flex: 1,
+        padding: "18px 8px",
+        borderRadius: 16,
+        border: days === d ? "2px solid var(--ac)" : "1px solid var(--bd)",
+        background: days === d ? "rgba(167,139,250,0.1)" : "var(--sf)",
+        cursor: "pointer",
+        textAlign: "center"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 24,
+        fontWeight: 900,
+        color: days === d ? "var(--ac)" : "var(--t1)",
+        fontVariantNumeric: "tabular-nums"
+      }
+    }, d), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 11,
+        fontWeight: 600,
+        color: days === d ? "var(--ac)" : "var(--t2)",
+        marginTop: 4
+      }
+    }, d <= 3 ? "Full Body" : d === 4 ? "Upper/Lower" : d === 5 ? "Full Body" : "PPL"));
+  }))), step === 2 && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      fontWeight: 800,
+      letterSpacing: "0.1em",
+      textTransform: "uppercase",
+      color: "var(--t3)",
+      marginBottom: 6
+    }
+  }, "Step 3 of 4"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 20,
+      fontWeight: 900,
+      letterSpacing: "-0.02em",
+      marginBottom: 6
+    }
+  }, "Training focus"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 13,
+      color: "var(--t2)",
+      marginBottom: 16,
+      lineHeight: 1.5
+    }
+  }, "Shifts exercise selection and volume. All options train the full body."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      gap: 8
+    }
+  }, [{
+    k: "balanced",
+    l: "Balanced",
+    d: "Even distribution across all muscle groups"
+  }, {
+    k: "upper",
+    l: "Upper Body",
+    d: "Extra chest, back & shoulder compounds"
+  }, {
+    k: "lower",
+    l: "Lower Body",
+    d: "Extra quad, hamstring & glute compounds"
+  }, {
+    k: "strength",
+    l: "Strength",
+    d: "Lower reps, more compounds, heavier loads"
+  }].map(function (f) {
+    return /*#__PURE__*/React.createElement("button", {
+      key: f.k,
+      onClick: function onClick() {
+        return setFocus(f.k);
+      },
+      style: {
+        padding: "14px 16px",
+        borderRadius: 14,
+        border: focus === f.k ? "2px solid var(--ac)" : "1px solid var(--bd)",
+        background: focus === f.k ? "rgba(167,139,250,0.1)" : "var(--sf)",
+        cursor: "pointer",
+        textAlign: "left",
+        display: "flex",
+        alignItems: "center",
+        gap: 12
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        background: focus === f.k ? "var(--ac)" : "rgba(255,255,255,0.15)",
+        flexShrink: 0
+      }
+    }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 15,
+        fontWeight: 700,
+        color: focus === f.k ? "var(--ac)" : "var(--t1)"
+      }
+    }, f.l), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 12,
+        color: focus === f.k ? "var(--ac)" : "var(--t2)",
+        marginTop: 2
+      }
+    }, f.d)));
+  }))), step === 3 && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      fontWeight: 800,
+      letterSpacing: "0.1em",
+      textTransform: "uppercase",
+      color: "var(--t3)",
+      marginBottom: 6
+    }
+  }, "Step 4 of 4"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 20,
+      fontWeight: 900,
+      letterSpacing: "-0.02em",
+      marginBottom: 6
+    }
+  }, "Slight adjustments"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 13,
+      color: "var(--t2)",
+      marginBottom: 16,
+      lineHeight: 1.5
+    }
+  }, "Both options train everything. This only shifts +1 set on a few accessories."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 11
+    }
+  }, [{
+    k: "male",
+    l: "Male",
+    d: "Slightly more chest & shoulder isolation volume"
+  }, {
+    k: "female",
+    l: "Female",
+    d: "Slightly more glute & hamstring isolation volume"
+  }].map(function (g) {
+    return /*#__PURE__*/React.createElement("button", {
+      key: g.k,
+      onClick: function onClick() {
+        return setGender(g.k);
+      },
+      style: {
+        flex: 1,
+        padding: "18px 14px",
+        borderRadius: 16,
+        border: gender === g.k ? "2px solid var(--ac)" : "1px solid var(--bd)",
+        background: gender === g.k ? "rgba(167,139,250,0.1)" : "var(--sf)",
+        cursor: "pointer",
+        textAlign: "left"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 16,
+        fontWeight: 800,
+        color: gender === g.k ? "var(--ac)" : "var(--t1)",
+        marginBottom: 6
+      }
+    }, g.l), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 12,
+        color: gender === g.k ? "var(--ac)" : "var(--t2)",
+        lineHeight: 1.5
+      }
+    }, g.d));
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 11,
+      marginTop: 24
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return step > 0 ? setStep(step - 1) : onClose();
+    },
+    style: {
+      flex: 1,
+      padding: 14,
+      borderRadius: 14,
+      border: "1px solid var(--bd)",
+      background: "transparent",
+      cursor: "pointer",
+      fontSize: 14,
+      fontWeight: 700,
+      color: "var(--t2)"
+    }
+  }, step > 0 ? "Back" : "Cancel"), /*#__PURE__*/React.createElement("button", {
+    onClick: handleNext,
+    disabled: !canNext,
+    style: {
+      flex: 2,
+      padding: 14,
+      borderRadius: 14,
+      border: "none",
+      background: canNext ? "var(--ac)" : "rgba(255,255,255,0.06)",
+      cursor: canNext ? "pointer" : "default",
+      fontSize: 14,
+      fontWeight: 800,
+      color: canNext ? "#fff" : "var(--t3)",
+      transition: "all .2s ease"
+    }
+  }, step < maxStep ? "Continue" : "Create Plan"))));
+}
+
+// ─── MAIN APP ───────────────────────────────────────────────
+function ForgeApp() {
+  var _plan$weeks, _week$days, _pc$week$phase$phase, _pc$week$phase$phase2, _plan$weeks3, _plan$weeks4, _week$days2, _plan$weeks5, _plan$weeks6;
+  var _useState25 = useState(null),
+    _useState26 = _slicedToArray(_useState25, 2),
+    plans = _useState26[0],
+    setPlans = _useState26[1];
+  var _useState27 = useState(null),
+    _useState28 = _slicedToArray(_useState27, 2),
+    pid = _useState28[0],
+    setPid = _useState28[1];
+  var _useState29 = useState(0),
+    _useState30 = _slicedToArray(_useState29, 2),
+    wi = _useState30[0],
+    setWi = _useState30[1];
+  var _useState31 = useState(0),
+    _useState32 = _slicedToArray(_useState31, 2),
+    di = _useState32[0],
+    setDi = _useState32[1];
+  var _useState33 = useState("workout"),
+    _useState34 = _slicedToArray(_useState33, 2),
+    tab = _useState34[0],
+    setTab = _useState34[1];
+  var _useState35 = useState({}),
+    _useState36 = _slicedToArray(_useState35, 2),
+    log = _useState36[0],
+    setLog = _useState36[1];
+  var _useState37 = useState(false),
+    _useState38 = _slicedToArray(_useState37, 2),
+    timer = _useState38[0],
+    setTimer = _useState38[1];
+  var _useState39 = useState(120),
+    _useState40 = _slicedToArray(_useState39, 2),
+    tsec = _useState40[0],
+    setTsec = _useState40[1];
+  var _useState41 = useState(false),
+    _useState42 = _slicedToArray(_useState41, 2),
+    loaded = _useState42[0],
+    setLoaded = _useState42[1];
+  var _useState43 = useState(false),
+    _useState44 = _slicedToArray(_useState43, 2),
+    showWiz = _useState44[0],
+    setShowWiz = _useState44[1];
+  var _useState45 = useState(null),
+    _useState46 = _slicedToArray(_useState45, 2),
+    editPlanId = _useState46[0],
+    setEditPlanId = _useState46[1];
+  var _useState47 = useState(""),
+    _useState48 = _slicedToArray(_useState47, 2),
+    editPlanName = _useState48[0],
+    setEditPlanName = _useState48[1];
+  var _useState49 = useState(null),
+    _useState50 = _slicedToArray(_useState49, 2),
+    confirmDelId = _useState50[0],
+    setConfirmDelId = _useState50[1];
+  var _useState51 = useState(null),
+    _useState52 = _slicedToArray(_useState51, 2),
+    showSummary = _useState52[0],
+    setShowSummary = _useState52[1];
+  var _useState53 = useState(null),
+    _useState54 = _slicedToArray(_useState53, 2),
+    confirmAction = _useState54[0],
+    setConfirmAction = _useState54[1];
+  var _useState55 = useState(null),
+    _useState56 = _slicedToArray(_useState55, 2),
+    workoutStart = _useState56[0],
+    setWorkoutStart = _useState56[1];
+  useEffect(function () {
+    _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+      var d, _p$plans, p, ppl, _t;
+      return _regenerator().w(function (_context) {
+        while (1) switch (_context.p = _context.n) {
+          case 0:
+            _context.p = 0;
+            _context.n = 1;
+            return window.storage.get("forge-v7");
+          case 1:
+            d = _context.v;
+            if (!(d !== null && d !== void 0 && d.value)) {
+              _context.n = 2;
+              break;
+            }
+            p = JSON.parse(d.value);
+            if (!((_p$plans = p.plans) !== null && _p$plans !== void 0 && _p$plans.length)) {
+              _context.n = 2;
+              break;
+            }
+            setPlans(p.plans);
+            setPid(p.pid);
+            setLog(p.log || {});
+            setWi(p.wi || 0);
+            setDi(p.di || 0);
+            setLoaded(true);
+            return _context.a(2);
+          case 2:
+            _context.n = 4;
+            break;
+          case 3:
+            _context.p = 3;
+            _t = _context.v;
+          case 4:
+            ppl = buildPPL();
+            setPlans([ppl]);
+            setPid(ppl.id);
+            setLoaded(true);
+          case 5:
+            return _context.a(2);
+        }
+      }, _callee, null, [[0, 3]]);
+    }))();
+  }, []);
+  useEffect(function () {
+    if (!loaded || !plans) return;
+    try {
+      window.storage.set("forge-v7", JSON.stringify({
+        plans: plans,
+        pid: pid,
+        log: log,
+        wi: wi,
+        di: di
+      }));
+    } catch (e) {}
+  }, [plans, pid, log, wi, di, loaded]);
+  var plan = plans === null || plans === void 0 ? void 0 : plans.find(function (p) {
+    return p.id === pid;
+  });
+  var week = plan === null || plan === void 0 || (_plan$weeks = plan.weeks) === null || _plan$weeks === void 0 ? void 0 : _plan$weeks[wi];
+  var day = week === null || week === void 0 || (_week$days = week.days) === null || _week$days === void 0 ? void 0 : _week$days[di];
+  var hLog = useCallback(function (w, d, e, s, v, actualRPE) {
+    var k = "".concat(pid, "-").concat(w, "-").concat(d, "-").concat(e, "-").concat(s);
+    setLog(function (prev) {
+      var n = _objectSpread({}, prev);
+      if (v == null) {
+        delete n[k];
+      } else {
+        var existing = n[k] || {};
+        n[k] = _objectSpread(_objectSpread({}, existing), {}, {
+          repsHit: v,
+          ts: Date.now()
+        });
+        if (actualRPE != null) n[k].actualRPE = actualRPE;
+        if (!workoutStart) setWorkoutStart(Date.now());
+      }
+      return n;
+    });
+    // Auto-progression: when logging LAST set of an exercise, score all sets and adapt future weeks
+    var isLastSet = day && day.exercises[e] && s === day.exercises[e].sets.length - 1;
+    if (isLastSet && v != null) {
+      setPlans(function (prev) {
+        return prev.map(function (p) {
+          var _p$weeks$w;
+          if (p.id !== pid) return p;
+          var ex = (_p$weeks$w = p.weeks[w]) === null || _p$weeks$w === void 0 || (_p$weeks$w = _p$weeks$w.days[d]) === null || _p$weeks$w === void 0 ? void 0 : _p$weeks$w.exercises[e];
+          if (!ex || !ex.progressionStep) return p;
+          var step = ex.progressionStep;
+          // Score ALL sets: average(repsHit/targetReps)
+          var totalScore = 0;
+          var scoredSets = 0;
+          ex.sets.forEach(function (_set, si) {
+            var lk = "".concat(pid, "-").concat(w, "-").concat(d, "-").concat(e, "-").concat(si);
+            var lg = si === s ? {
+              repsHit: v
+            } : log[lk];
+            if ((lg === null || lg === void 0 ? void 0 : lg.repsHit) != null) {
+              var tgt = parseInt((_set.reps.match(/\d+/) || ["1"])[0], 10) || 1;
+              totalScore += lg.repsHit / tgt;
+              scoredSets++;
+            }
+          });
+          if (scoredSets === 0) return p;
+          var avgScore = totalScore / scoredSets;
+          // Classify: >=1.0 exceeded, >=0.85 on track, >=0.7 struggling, <0.7 failing
+          var delta = 0;
+          if (avgScore >= 1.0) delta = step;else if (avgScore < 0.7) delta = -step;
+          // 0.7-0.99: keep same weight (on track or minor struggle)
+          if (delta === 0) return p;
+          var n = JSON.parse(JSON.stringify(p));
+          for (var ww = w + 1; ww < n.weeks.length; ww++) {
+            var _n$weeks$ww;
+            var futureEx = (_n$weeks$ww = n.weeks[ww]) === null || _n$weeks$ww === void 0 || (_n$weeks$ww = _n$weeks$ww.days[d]) === null || _n$weeks$ww === void 0 ? void 0 : _n$weeks$ww.exercises[e];
+            if (!futureEx) continue;
+            futureEx.sets.forEach(function (fset) {
+              var bwp = fset.weight.match(/^BW\s*\+\s*([\d.]+)\s*kg$/i);
+              var kgm = fset.weight.match(/^([\d.]+)\s*kg$/i);
+              if (bwp) {
+                var nv = Math.max(0, +(parseFloat(bwp[1]) + delta).toFixed(1));
+                fset.weight = "BW + ".concat(nv, " kg");
+              } else if (kgm) {
+                var _nv = Math.max(0, +(parseFloat(kgm[1]) + delta).toFixed(1));
+                fset.weight = "".concat(_nv, " kg");
+              }
+            });
+          }
+          return n;
+        });
+      });
+    }
+  }, [pid]);
+  var hSwap = useCallback(function (w, d, e, alt) {
+    setPlans(function (prev) {
+      return prev.map(function (p) {
+        if (p.id !== pid) return p;
+        var n = JSON.parse(JSON.stringify(p));
+        n.weeks.forEach(function (wk) {
+          var _wk$days$d;
+          if ((_wk$days$d = wk.days[d]) !== null && _wk$days$d !== void 0 && _wk$days$d.exercises[e]) {
+            var old = wk.days[d].exercises[e];
+            wk.days[d].exercises[e] = _objectSpread(_objectSpread({}, old), {}, {
+              name: alt.name,
+              equipment: alt.eq,
+              progressionStep: alt.step || 0,
+              isMain: !!alt.step,
+              sets: old.sets.map(function (s) {
+                return _objectSpread(_objectSpread({}, s), {}, {
+                  reps: alt.r
+                });
+              })
+            });
+          }
+        });
+        return n;
+      });
+    });
+  }, [pid]);
+  var hWeight = useCallback(function (w, d, e, s, newW) {
+    setPlans(function (prev) {
+      return prev.map(function (p) {
+        var _n$weeks$w;
+        if (p.id !== pid) return p;
+        var n = JSON.parse(JSON.stringify(p));
+        // Update all sets from s onward in this exercise this week
+        var sets = (_n$weeks$w = n.weeks[w]) === null || _n$weeks$w === void 0 || (_n$weeks$w = _n$weeks$w.days[d]) === null || _n$weeks$w === void 0 || (_n$weeks$w = _n$weeks$w.exercises[e]) === null || _n$weeks$w === void 0 ? void 0 : _n$weeks$w.sets;
+        if (sets) {
+          for (var i = s; i < sets.length; i++) sets[i].weight = newW;
+        }
+        // If editing TOP SET (s===0) in first week, propagate to all subsequent weeks with progression
+        if (s === 0 && w === 0 && n.weeks.length > 1) {
+          var _n$weeks$;
+          var ex = (_n$weeks$ = n.weeks[0]) === null || _n$weeks$ === void 0 || (_n$weeks$ = _n$weeks$.days[d]) === null || _n$weeks$ === void 0 ? void 0 : _n$weeks$.exercises[e];
+          var step = (ex === null || ex === void 0 ? void 0 : ex.progressionStep) || 0;
+          var topW = newW;
+          var bwp = topW.match(/^BW\s*\+\s*([\d.]+)\s*kg$/i);
+          var kgm = topW.match(/^([\d.]+)\s*kg$/i);
+          var baseVal = bwp ? parseFloat(bwp[1]) : kgm ? parseFloat(kgm[1]) : null;
+          if (baseVal !== null) {
+            var bumps = step >= 5 ? [0, 5, 10, 10, 15, 0] : step > 0 ? [0, 2.5, 5, 5, 7.5, 0] : [0, 0, 0, 0, 0, 0];
+            var _loop3 = function _loop3() {
+              var _n$weeks$ww2;
+              var wwSets = (_n$weeks$ww2 = n.weeks[ww]) === null || _n$weeks$ww2 === void 0 || (_n$weeks$ww2 = _n$weeks$ww2.days[d]) === null || _n$weeks$ww2 === void 0 || (_n$weeks$ww2 = _n$weeks$ww2.exercises[e]) === null || _n$weeks$ww2 === void 0 ? void 0 : _n$weeks$ww2.sets;
+              if (!wwSets) return 1; // continue
+              var bump = bumps[ww] || 0;
+              var val = +(baseVal + bump).toFixed(1);
+              var progW = bwp ? "BW + ".concat(val, " kg") : "".concat(val, " kg");
+              wwSets.forEach(function (ss) {
+                ss.weight = progW;
+              });
+            };
+            for (var ww = 1; ww < n.weeks.length; ww++) {
+              if (_loop3()) continue;
+            }
+          }
+        }
+        return n;
+      });
+    });
+  }, [pid]);
+  var finishWorkout = useCallback(function () {
+    if (!day) return;
+    var totalSets = 0;
+    var totalReps = 0;
+    var totalVol = 0;
+    var completed = 0;
+    day.exercises.forEach(function (ex, ei) {
+      ex.sets.forEach(function (_, si) {
+        totalSets++;
+        var lk = "".concat(pid, "-").concat(wi, "-").concat(di, "-").concat(ei, "-").concat(si);
+        var lg = log[lk];
+        if ((lg === null || lg === void 0 ? void 0 : lg.repsHit) != null) {
+          var _ex$sets$si;
+          completed++;
+          totalReps += lg.repsHit;
+          var wm = ((_ex$sets$si = ex.sets[si]) === null || _ex$sets$si === void 0 ? void 0 : _ex$sets$si.weight) || "";
+          var kgm = wm.match(/^([\d.]+)\s*kg$/i);
+          if (kgm) totalVol += lg.repsHit * parseFloat(kgm[1]);
+        }
+      });
+    });
+    var dur = workoutStart ? Math.round((Date.now() - workoutStart) / 60000) : 0;
+    setShowSummary({
+      totalSets: totalSets,
+      completed: completed,
+      totalReps: totalReps,
+      totalVol: Math.round(totalVol),
+      duration: dur
+    });
+    setWorkoutStart(null);
+  }, [day, pid, wi, di, log, workoutStart]);
+  var filteredLog = useMemo(function () {
+    return Object.fromEntries(Object.entries(log).filter(function (_ref7) {
+      var _ref8 = _slicedToArray(_ref7, 1),
+        k = _ref8[0];
+      return k.startsWith("".concat(pid, "-"));
+    }).map(function (_ref9) {
+      var _ref0 = _slicedToArray(_ref9, 2),
+        k = _ref0[0],
+        v = _ref0[1];
+      return [k.replace("".concat(pid, "-"), ""), v];
+    }));
+  }, [log, pid]);
+  var pct = useMemo(function () {
+    if (!day) return 0;
+    var t = 0,
+      dn = 0;
+    day.exercises.forEach(function (ex, ei) {
+      return ex.sets.forEach(function (_, si) {
+        var _log4;
+        t++;
+        if (((_log4 = log["".concat(pid, "-").concat(wi, "-").concat(di, "-").concat(ei, "-").concat(si)]) === null || _log4 === void 0 ? void 0 : _log4.repsHit) != null) dn++;
+      });
+    });
+    return t ? Math.round(dn / t * 100) : 0;
+  }, [day, wi, di, log, pid]);
+  var wpcts = useMemo(function () {
+    if (!week) return [];
+    return week.days.map(function (d2, di2) {
+      var t = 0,
+        dn = 0;
+      d2.exercises.forEach(function (ex, ei) {
+        return ex.sets.forEach(function (_, si) {
+          var _log5;
+          t++;
+          if (((_log5 = log["".concat(pid, "-").concat(wi, "-").concat(di2, "-").concat(ei, "-").concat(si)]) === null || _log5 === void 0 ? void 0 : _log5.repsHit) != null) dn++;
+        });
+      });
+      return t ? Math.round(dn / t * 100) : 0;
+    });
+  }, [week, wi, log, pid]);
+  var pc = {
+    intro: {
+      bg: "rgba(99,179,237,0.12)",
+      t: "#63B3ED",
+      b: "rgba(99,179,237,0.2)"
+    },
+    build: {
+      bg: "rgba(72,187,120,0.12)",
+      t: "#48BB78",
+      b: "rgba(72,187,120,0.2)"
+    },
+    peak: {
+      bg: "rgba(236,201,75,0.12)",
+      t: "#ECC94B",
+      b: "rgba(236,201,75,0.2)"
+    },
+    overreach: {
+      bg: "rgba(245,101,101,0.12)",
+      t: "#F56565",
+      b: "rgba(245,101,101,0.2)"
+    },
+    deload: {
+      bg: "rgba(160,174,192,0.12)",
+      t: "#A0AEC0",
+      b: "rgba(160,174,192,0.2)"
+    }
+  };
+  var css = "@keyframes slideUp{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}@keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes slideDownIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}@media(prefers-reduced-motion:reduce){*{animation-duration:0.01ms!important;transition-duration:0.01ms!important;}}";
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      "--ac": "#A78BFA",
+      "--ac2": "#7C3AED",
+      "--t1": "#F7FAFC",
+      "--t2": "#A0AEC0",
+      "--t3": "#8494A7",
+      "--bg": "#0D1117",
+      "--sf": "rgba(255,255,255,0.03)",
+      "--bd": "rgba(255,255,255,0.06)",
+      fontFamily: '"SF Pro Display",-apple-system,BlinkMacSystemFont,system-ui,sans-serif',
+      background: "var(--bg)",
+      minHeight: "100vh",
+      maxWidth: 480,
+      margin: "0 auto",
+      color: "var(--t1)",
+      WebkitFontSmoothing: "antialiased",
+      paddingBottom: 96,
+      paddingTop: "env(safe-area-inset-top)",
+      overscrollBehavior: "none",
+      WebkitTouchCallout: "none",
+      WebkitTapHighlightColor: "transparent",
+      WebkitUserSelect: "none",
+      userSelect: "none",
+      touchAction: "pan-y"
+    }
+  }, /*#__PURE__*/React.createElement("style", null, css), !loaded && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      minHeight: "100vh"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 24,
+      fontWeight: 900,
+      color: "var(--ac)",
+      letterSpacing: "0.1em"
+    }
+  }, "FORGE"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      color: "var(--t3)",
+      marginTop: 8
+    }
+  }, "Loading..."))), loaded && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "20px 20px 0",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: 12
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      fontWeight: 800,
+      letterSpacing: "0.16em",
+      textTransform: "uppercase",
+      color: "var(--ac)",
+      marginBottom: 2
+    }
+  }, "FORGE"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 24,
+      fontWeight: 900,
+      letterSpacing: "-0.03em",
+      background: "linear-gradient(135deg,#F7FAFC 0%,#A78BFA 100%)",
+      WebkitBackgroundClip: "text",
+      WebkitTextFillColor: "transparent"
+    }
+  }, (plan === null || plan === void 0 ? void 0 : plan.name) || "Workout"))), tab === "workout" && plan && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "8px 20px",
+      position: "sticky",
+      top: 0,
+      zIndex: 50,
+      background: "rgba(13,17,23,0.92)",
+      backdropFilter: "blur(20px) saturate(180%)"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between"
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    "aria-label": "Previous week",
+    onClick: function onClick() {
+      return setWi(Math.max(0, wi - 1));
+    },
+    disabled: wi === 0,
+    style: {
+      width: 36,
+      height: 32,
+      borderRadius: 10,
+      border: "none",
+      background: "transparent",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      cursor: "pointer",
+      opacity: wi === 0 ? 0.3 : 1,
+      color: "var(--t2)"
+    }
+  }, /*#__PURE__*/React.createElement(I, {
+    n: "chevL",
+    s: 16
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 8
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 15,
+      fontWeight: 800,
+      color: "var(--t1)"
+    }
+  }, "Week ", wi + 1), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 13,
+      color: "var(--t3)"
+    }
+  }, "\u2014"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 15,
+      fontWeight: 700,
+      color: "var(--t2)"
+    }
+  }, (day === null || day === void 0 ? void 0 : day.label) || "Day " + (di + 1)), (week === null || week === void 0 ? void 0 : week.phase) && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 11,
+      fontWeight: 700,
+      letterSpacing: "0.05em",
+      textTransform: "uppercase",
+      color: ((_pc$week$phase$phase = pc[week.phase.phase]) === null || _pc$week$phase$phase === void 0 ? void 0 : _pc$week$phase$phase.t) || "var(--t3)",
+      background: ((_pc$week$phase$phase2 = pc[week.phase.phase]) === null || _pc$week$phase$phase2 === void 0 ? void 0 : _pc$week$phase$phase2.bg) || "transparent",
+      padding: "2px 8px",
+      borderRadius: 6
+    }
+  }, week.phase.label)), /*#__PURE__*/React.createElement("button", {
+    "aria-label": "Next week",
+    onClick: function onClick() {
+      var _plan$weeks2;
+      return setWi(Math.min((((_plan$weeks2 = plan.weeks) === null || _plan$weeks2 === void 0 ? void 0 : _plan$weeks2.length) || 1) - 1, wi + 1));
+    },
+    disabled: wi >= (((_plan$weeks3 = plan.weeks) === null || _plan$weeks3 === void 0 ? void 0 : _plan$weeks3.length) || 1) - 1,
+    style: {
+      width: 36,
+      height: 32,
+      borderRadius: 10,
+      border: "none",
+      background: "transparent",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      cursor: "pointer",
+      opacity: wi >= (((_plan$weeks4 = plan.weeks) === null || _plan$weeks4 === void 0 ? void 0 : _plan$weeks4.length) || 1) - 1 ? 0.3 : 1,
+      color: "var(--t2)"
+    }
+  }, /*#__PURE__*/React.createElement(I, {
+    n: "chevR",
+    s: 16
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 4,
+      paddingBottom: 12,
+      overflowX: "auto",
+      scrollbarWidth: "none"
+    }
+  }, week === null || week === void 0 || (_week$days2 = week.days) === null || _week$days2 === void 0 ? void 0 : _week$days2.map(function (d2, i) {
+    var a = i === di;
+    var p2 = wpcts[i] || 0;
+    return /*#__PURE__*/React.createElement("button", {
+      key: i,
+      onClick: function onClick() {
+        return setDi(i);
+      },
+      style: {
+        flex: "1 0 auto",
+        minWidth: 50,
+        padding: "8px 6px",
+        borderRadius: 12,
+        border: a ? "2px solid var(--ac)" : "1px solid var(--bd)",
+        background: a ? "rgba(167,139,250,0.1)" : "var(--sf)",
+        cursor: "pointer",
+        textAlign: "center",
+        position: "relative",
+        overflow: "hidden"
+      }
+    }, p2 > 0 && /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        width: "".concat(p2, "%"),
+        height: 3,
+        background: p2 === 100 ? "var(--ac)" : "rgba(255,255,255,0.1)",
+        borderRadius: 2,
+        transition: "width .3s ease"
+      }
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 13,
+        fontWeight: 800,
+        color: a ? "var(--ac)" : "var(--t2)"
+      }
+    }, d2.label || "Day ".concat(i + 1)));
+  }))), day && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "0 16px",
+      animation: "slideDownIn .35s ease-out"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: 12,
+      padding: "0 4px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 15,
+      fontWeight: 700,
+      color: "var(--t2)"
+    }
+  }, day.subtitle || "".concat(day.exercises.length, " exercises")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 8
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 72,
+      height: 5,
+      background: "rgba(255,255,255,0.06)",
+      borderRadius: 3,
+      overflow: "hidden"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: "".concat(pct, "%"),
+      height: "100%",
+      background: "var(--ac)",
+      borderRadius: 3,
+      transition: "width .4s cubic-bezier(.16,1,.3,1)"
+    }
+  })), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 14,
+      fontWeight: 800,
+      color: pct === 100 ? "var(--ac)" : "var(--t3)",
+      fontVariantNumeric: "tabular-nums"
+    }
+  }, pct, "%"))), day.exercises.map(function (ex, ei) {
+    return /*#__PURE__*/React.createElement(ExBlock, {
+      key: "".concat(wi, "-").concat(di, "-").concat(ei, "-").concat(ex.name),
+      ex: ex,
+      ei: ei,
+      di: di,
+      wi: wi,
+      log: filteredLog,
+      onLog: hLog,
+      onRest: function onRest() {
+        setTsec(ex.isMain ? 180 : 120);
+        setTimer(true);
+      },
+      onSwap: hSwap,
+      onWeight: hWeight,
+      onAllDone: function onAllDone() {
+        setTimeout(function () {
+          return finishWorkout();
+        }, 500);
+      }
+    });
+  }), pct > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 8,
+      marginTop: 8
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setConfirmAction("reset");
+    },
+    style: {
+      flex: 1,
+      padding: "12px",
+      borderRadius: 14,
+      border: "1px solid rgba(245,101,101,0.2)",
+      background: "rgba(245,101,101,0.06)",
+      color: SC.err,
+      fontSize: 14,
+      fontWeight: 700,
+      cursor: "pointer"
+    }
+  }, "Reset"), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setConfirmAction("finish");
+    },
+    style: {
+      flex: 1,
+      padding: "12px",
+      borderRadius: 14,
+      border: "none",
+      background: "rgba(72,187,120,0.15)",
+      color: SC.ok,
+      fontSize: 14,
+      fontWeight: 800,
+      cursor: "pointer"
+    }
+  }, "Finish Workout")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: 32
+    }
+  }))), tab === "program" && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "0 16px",
+      animation: "slideDownIn .35s ease-out"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 22,
+      fontWeight: 900,
+      letterSpacing: "-0.03em",
+      marginBottom: 4,
+      padding: "0 4px"
+    }
+  }, "Programs"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 13,
+      color: "var(--t2)",
+      marginBottom: 16,
+      padding: "0 4px"
+    }
+  }, "Your training plans"), plans === null || plans === void 0 ? void 0 : plans.map(function (p) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: p.id,
+      style: {
+        width: "100%",
+        padding: "16px 18px",
+        marginBottom: 10,
+        borderRadius: 18,
+        border: p.id === pid ? "2px solid var(--ac)" : "1px solid var(--bd)",
+        background: p.id === pid ? "rgba(167,139,250,0.08)" : "var(--sf)",
+        backdropFilter: "blur(8px)",
+        boxShadow: p.id === pid ? "inset 2px 2px 6px rgba(167,139,250,0.1),inset -2px -2px 6px rgba(0,0,0,0.2)" : "2px 2px 8px rgba(0,0,0,0.3),-1px -1px 4px rgba(255,255,255,0.02)"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        flex: 1,
+        cursor: "pointer"
+      },
+      onClick: function onClick() {
+        var np = plans.find(function (pp) {
+          return pp.id === p.id;
+        });
+        setPid(p.id);
+        setWi(function (w) {
+          var _np$weeks;
+          return Math.min(w, (np === null || np === void 0 || (_np$weeks = np.weeks) === null || _np$weeks === void 0 ? void 0 : _np$weeks.length) - 1 || 0);
+        });
+        setDi(function (d) {
+          var _np$weeks2;
+          return Math.min(d, (np === null || np === void 0 || (_np$weeks2 = np.weeks) === null || _np$weeks2 === void 0 || (_np$weeks2 = _np$weeks2[0]) === null || _np$weeks2 === void 0 || (_np$weeks2 = _np$weeks2.days) === null || _np$weeks2 === void 0 ? void 0 : _np$weeks2.length) - 1 || 0);
+        });
+        setTab("workout");
+      }
+    }, editPlanId === p.id ? /*#__PURE__*/React.createElement("input", {
+      value: editPlanName,
+      onChange: function onChange(e) {
+        return setEditPlanName(e.target.value);
+      },
+      onBlur: function onBlur() {
+        if (editPlanName.trim()) setPlans(function (prev) {
+          return prev.map(function (pp) {
+            return pp.id === p.id ? _objectSpread(_objectSpread({}, pp), {}, {
+              name: editPlanName.trim()
+            }) : pp;
+          });
+        });
+        setEditPlanId(null);
+      },
+      onKeyDown: function onKeyDown(e) {
+        if (e.key === "Enter") {
+          if (editPlanName.trim()) setPlans(function (prev) {
+            return prev.map(function (pp) {
+              return pp.id === p.id ? _objectSpread(_objectSpread({}, pp), {}, {
+                name: editPlanName.trim()
+              }) : pp;
+            });
+          });
+          setEditPlanId(null);
+        }
+      },
+      onClick: function onClick(e) {
+        return e.stopPropagation();
+      },
+      autoFocus: true,
+      style: {
+        width: "100%",
+        fontSize: 16,
+        fontWeight: 800,
+        color: "var(--ac)",
+        background: "rgba(167,139,250,0.08)",
+        border: "1.5px solid rgba(167,139,250,0.3)",
+        borderRadius: 10,
+        padding: "6px 10px",
+        outline: "none",
+        fontFamily: "inherit"
+      }
+    }) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 18,
+        fontWeight: 800,
+        color: "var(--t1)",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        maxWidth: 200
+      }
+    }, p.name), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 14,
+        color: "var(--t2)",
+        marginTop: 2
+      }
+    }, p.subtitle || "".concat(p.daysPerWeek, " days/week")))), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        alignItems: "center",
+        gap: 6
+      }
+    }, p.id === pid && /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: 11,
+        fontWeight: 800,
+        background: "var(--ac)",
+        color: "#fff",
+        padding: "3px 10px",
+        borderRadius: 8
+      }
+    }, "ACTIVE"), /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick(e) {
+        e.stopPropagation();
+        setEditPlanId(p.id);
+        setEditPlanName(p.name);
+      },
+      style: {
+        width: 44,
+        height: 44,
+        borderRadius: 10,
+        border: "1px solid var(--bd)",
+        background: "transparent",
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: 14,
+        color: "var(--t3)"
+      }
+    }, "\u270E"), plans.length > 1 && confirmDelId !== p.id && /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick(e) {
+        e.stopPropagation();
+        setConfirmDelId(p.id);
+      },
+      style: {
+        width: 44,
+        height: 44,
+        borderRadius: 10,
+        border: "1px solid rgba(245,101,101,0.2)",
+        background: "transparent",
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+      }
+    }, /*#__PURE__*/React.createElement(I, {
+      n: "trash",
+      s: 16,
+      c: "#F56565"
+    })))), confirmDelId === p.id && /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        gap: 8,
+        marginTop: 10
+      }
+    }, /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() {
+        return setConfirmDelId(null);
+      },
+      style: {
+        flex: 1,
+        padding: "8px",
+        borderRadius: 10,
+        border: "1px solid var(--bd)",
+        background: "transparent",
+        cursor: "pointer",
+        fontSize: 12,
+        fontWeight: 700,
+        color: "var(--t2)"
+      }
+    }, "Cancel"), /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() {
+        var delId = p.id;
+        setPlans(function (prev) {
+          var next = prev.filter(function (pp) {
+            return pp.id !== delId;
+          });
+          if (pid === delId && next.length > 0) setPid(next[0].id);
+          return next;
+        });
+        setLog(function (prev) {
+          var n = {};
+          Object.entries(prev).forEach(function (_ref1) {
+            var _ref10 = _slicedToArray(_ref1, 2),
+              k = _ref10[0],
+              v = _ref10[1];
+            if (!k.startsWith(delId + "-")) n[k] = v;
+          });
+          return n;
+        });
+        setConfirmDelId(null);
+      },
+      style: {
+        flex: 1,
+        padding: "8px",
+        borderRadius: 10,
+        border: "none",
+        background: "rgba(245,101,101,0.15)",
+        cursor: "pointer",
+        fontSize: 12,
+        fontWeight: 800,
+        color: "#F56565"
+      }
+    }, "Delete Plan")));
+  }), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setShowWiz(true);
+    },
+    style: {
+      width: "100%",
+      padding: "16px",
+      borderRadius: 18,
+      border: "2px dashed rgba(167,139,250,0.3)",
+      background: "transparent",
+      cursor: "pointer",
+      fontSize: 14,
+      fontWeight: 700,
+      color: "var(--ac)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 8,
+      marginTop: 4
+    }
+  }, /*#__PURE__*/React.createElement(I, {
+    n: "plus",
+    s: 18,
+    c: "var(--ac)"
+  }), "Create New Plan"), plan && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 24
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 16,
+      fontWeight: 800,
+      marginBottom: 12,
+      padding: "0 4px"
+    }
+  }, plan.name, " \u2014 Weeks"), (_plan$weeks5 = plan.weeks) === null || _plan$weeks5 === void 0 ? void 0 : _plan$weeks5.map(function (wk, wki) {
+    var _pc$wk$phase$phase, _wk$phase, _pc$wk$phase$phase2, _wk$phase2, _wk$phase3;
+    var ts = wk.days.reduce(function (a, d) {
+      return a + d.exercises.reduce(function (b, e) {
+        return b + e.sets.length;
+      }, 0);
+    }, 0);
+    var ds = wk.days.reduce(function (a, d, dii) {
+      return a + d.exercises.reduce(function (b, e, eii) {
+        return b + e.sets.filter(function (_, sii) {
+          var _log6;
+          return ((_log6 = log["".concat(plan.id, "-").concat(wki, "-").concat(dii, "-").concat(eii, "-").concat(sii)]) === null || _log6 === void 0 ? void 0 : _log6.repsHit) != null;
+        }).length;
+      }, 0);
+    }, 0);
+    var p2 = ts ? Math.round(ds / ts * 100) : 0;
+    return /*#__PURE__*/React.createElement("button", {
+      key: wki,
+      onClick: function onClick() {
+        setWi(wki);
+        setTab("workout");
+      },
+      style: {
+        width: "100%",
+        padding: "14px 16px",
+        marginBottom: 8,
+        borderRadius: 14,
+        border: wki === wi ? "2px solid ".concat(((_pc$wk$phase$phase = pc[(_wk$phase = wk.phase) === null || _wk$phase === void 0 ? void 0 : _wk$phase.phase]) === null || _pc$wk$phase$phase === void 0 ? void 0 : _pc$wk$phase$phase.t) || "var(--ac)") : "1px solid var(--bd)",
+        background: "var(--sf)",
+        cursor: "pointer",
+        textAlign: "left",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        boxShadow: "2px 2px 8px rgba(0,0,0,0.2),-1px -1px 4px rgba(255,255,255,0.01)"
+      }
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 17,
+        fontWeight: 800
+      }
+    }, "Week ", wki + 1), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 14,
+        color: ((_pc$wk$phase$phase2 = pc[(_wk$phase2 = wk.phase) === null || _wk$phase2 === void 0 ? void 0 : _wk$phase2.phase]) === null || _pc$wk$phase$phase2 === void 0 ? void 0 : _pc$wk$phase$phase2.t) || "var(--t2)",
+        fontWeight: 700,
+        marginTop: 2
+      }
+    }, ((_wk$phase3 = wk.phase) === null || _wk$phase3 === void 0 ? void 0 : _wk$phase3.label) || "")), /*#__PURE__*/React.createElement("div", {
+      style: {
+        textAlign: "right"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 22,
+        fontWeight: 900,
+        fontVariantNumeric: "tabular-nums",
+        color: p2 === 100 ? "var(--ac)" : "var(--t1)"
+      }
+    }, p2, "%"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 13,
+        color: "var(--t3)"
+      }
+    }, ds, "/", ts)));
+  }))), tab === "progress" && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "0 16px",
+      animation: "slideDownIn .35s ease-out"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 22,
+      fontWeight: 900,
+      letterSpacing: "-0.03em",
+      marginBottom: 16,
+      padding: "0 4px"
+    }
+  }, "Progress"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "var(--sf)",
+      borderRadius: 18,
+      border: "1px solid var(--bd)",
+      padding: "16px",
+      boxShadow: "2px 2px 8px rgba(0,0,0,0.2),-1px -1px 4px rgba(255,255,255,0.01)"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 14,
+      fontWeight: 800,
+      marginBottom: 12
+    }
+  }, "Workout Completion"), plan === null || plan === void 0 || (_plan$weeks6 = plan.weeks) === null || _plan$weeks6 === void 0 ? void 0 : _plan$weeks6.map(function (wk, wki) {
+    var ts = wk.days.reduce(function (a, d) {
+      return a + d.exercises.reduce(function (b, e) {
+        return b + e.sets.length;
+      }, 0);
+    }, 0);
+    var ds = wk.days.reduce(function (a, d, dii) {
+      return a + d.exercises.reduce(function (b, e, eii) {
+        return b + e.sets.filter(function (_, sii) {
+          var _log7;
+          return ((_log7 = log["".concat(plan.id, "-").concat(wki, "-").concat(dii, "-").concat(eii, "-").concat(sii)]) === null || _log7 === void 0 ? void 0 : _log7.repsHit) != null;
+        }).length;
+      }, 0);
+    }, 0);
+    var p2 = ts ? Math.round(ds / ts * 100) : 0;
+    return /*#__PURE__*/React.createElement("div", {
+      key: wki,
+      style: {
+        display: "flex",
+        alignItems: "center",
+        gap: 10,
+        marginBottom: 8
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        width: 36,
+        fontSize: 13,
+        fontWeight: 700,
+        color: "var(--t3)"
+      }
+    }, "W", wki + 1), /*#__PURE__*/React.createElement("div", {
+      style: {
+        flex: 1,
+        height: 8,
+        background: "rgba(255,255,255,0.04)",
+        borderRadius: 4,
+        overflow: "hidden"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        width: "".concat(p2, "%"),
+        height: "100%",
+        borderRadius: 4,
+        transition: "width .4s ease",
+        background: p2 === 100 ? "var(--ac)" : "linear-gradient(90deg,#7C3AED,#A78BFA)"
+      }
+    })), /*#__PURE__*/React.createElement("span", {
+      style: {
+        width: 32,
+        fontSize: 13,
+        fontWeight: 800,
+        textAlign: "right",
+        fontVariantNumeric: "tabular-nums",
+        color: p2 === 100 ? "var(--ac)" : "var(--t2)"
+      }
+    }, p2, "%"));
+  }))), confirmAction && /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "fixed",
+      inset: 0,
+      background: "rgba(0,0,0,0.7)",
+      backdropFilter: "blur(8px)",
+      zIndex: 200,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 20
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "#161B22",
+      borderRadius: 20,
+      padding: 24,
+      maxWidth: 340,
+      width: "100%",
+      boxShadow: "0 8px 40px rgba(0,0,0,0.6)"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 18,
+      fontWeight: 800,
+      marginBottom: 8
+    }
+  }, confirmAction === "reset" ? "Reset Workout?" : "Finish Workout?"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 14,
+      color: "var(--t2)",
+      marginBottom: 20,
+      lineHeight: 1.5
+    }
+  }, confirmAction === "reset" ? "All logged sets for today will be cleared." : "This will end your session and show your workout stats."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 10
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setConfirmAction(null);
+    },
+    style: {
+      flex: 1,
+      padding: 12,
+      borderRadius: 12,
+      border: "1px solid var(--bd)",
+      background: "transparent",
+      cursor: "pointer",
+      fontSize: 14,
+      fontWeight: 700,
+      color: "var(--t2)"
+    }
+  }, "Cancel"), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      if (confirmAction === "reset") {
+        var n = _objectSpread({}, log);
+        day.exercises.forEach(function (ex, ei) {
+          return ex.sets.forEach(function (_, si) {
+            delete n["".concat(pid, "-").concat(wi, "-").concat(di, "-").concat(ei, "-").concat(si)];
+          });
+        });
+        setLog(n);
+        setWorkoutStart(null);
+      } else {
+        finishWorkout();
+      }
+      setConfirmAction(null);
+    },
+    style: {
+      flex: 1,
+      padding: 12,
+      borderRadius: 12,
+      border: "none",
+      background: confirmAction === "reset" ? "rgba(245,101,101,0.2)" : "rgba(72,187,120,0.2)",
+      cursor: "pointer",
+      fontSize: 14,
+      fontWeight: 800,
+      color: confirmAction === "reset" ? SC.err : SC.ok
+    }
+  }, confirmAction === "reset" ? "Reset" : "Finish")))), showSummary && /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "fixed",
+      inset: 0,
+      background: "rgba(0,0,0,0.7)",
+      backdropFilter: "blur(12px)",
+      zIndex: 200,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 20
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "#161B22",
+      borderRadius: 24,
+      padding: 28,
+      maxWidth: 380,
+      width: "100%",
+      boxShadow: "0 8px 40px rgba(0,0,0,0.6)",
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 32,
+      marginBottom: 8
+    }
+  }, "\uD83C\uDFCB\uFE0F"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 22,
+      fontWeight: 900,
+      marginBottom: 4
+    }
+  }, "Workout Complete"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 14,
+      color: "var(--t2)",
+      marginBottom: 20
+    }
+  }, "Great session!"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: 12,
+      marginBottom: 20
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "rgba(255,255,255,0.04)",
+      borderRadius: 14,
+      padding: "14px 10px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 24,
+      fontWeight: 900,
+      color: "var(--ac)"
+    }
+  }, showSummary.completed, "/", showSummary.totalSets), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      color: "var(--t3)",
+      marginTop: 4
+    }
+  }, "Sets completed")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "rgba(255,255,255,0.04)",
+      borderRadius: 14,
+      padding: "14px 10px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 24,
+      fontWeight: 900,
+      color: "var(--ac)"
+    }
+  }, showSummary.duration, "m"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      color: "var(--t3)",
+      marginTop: 4
+    }
+  }, "Duration")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "rgba(255,255,255,0.04)",
+      borderRadius: 14,
+      padding: "14px 10px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 24,
+      fontWeight: 900,
+      color: "var(--ac)"
+    }
+  }, showSummary.totalReps), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      color: "var(--t3)",
+      marginTop: 4
+    }
+  }, "Total reps")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "rgba(255,255,255,0.04)",
+      borderRadius: 14,
+      padding: "14px 10px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 24,
+      fontWeight: 900,
+      color: "var(--ac)"
+    }
+  }, showSummary.totalVol > 999 ? (showSummary.totalVol / 1000).toFixed(1) + "t" : showSummary.totalVol + "kg"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      color: "var(--t3)",
+      marginTop: 4
+    }
+  }, "Volume"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 14,
+      fontWeight: 700,
+      color: "var(--t2)",
+      marginBottom: 16
+    }
+  }, "How do you feel?"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 8,
+      marginBottom: 20,
+      justifyContent: "center"
+    }
+  }, [{
+    e: "\uD83D\uDCAA",
+    l: "Strong"
+  }, {
+    e: "\uD83D\uDE0A",
+    l: "Good"
+  }, {
+    e: "\uD83D\uDE12",
+    l: "Tired"
+  }, {
+    e: "\uD83E\uDD15",
+    l: "Pain"
+  }].map(function (m) {
+    var _log8, _log9;
+    return /*#__PURE__*/React.createElement("button", {
+      key: m.l,
+      onClick: function onClick() {
+        setLog(function (prev) {
+          return _objectSpread(_objectSpread({}, prev), {}, _defineProperty({}, "".concat(pid, "-").concat(wi, "-").concat(di, "-mood"), {
+            mood: m.l,
+            ts: Date.now()
+          }));
+        });
+      },
+      style: {
+        flex: 1,
+        padding: "10px 4px",
+        borderRadius: 12,
+        border: ((_log8 = log["".concat(pid, "-").concat(wi, "-").concat(di, "-mood")]) === null || _log8 === void 0 ? void 0 : _log8.mood) === m.l ? "2px solid var(--ac)" : "1px solid var(--bd)",
+        background: ((_log9 = log["".concat(pid, "-").concat(wi, "-").concat(di, "-mood")]) === null || _log9 === void 0 ? void 0 : _log9.mood) === m.l ? "rgba(167,139,250,0.1)" : "var(--sf)",
+        cursor: "pointer",
+        textAlign: "center"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 20
+      }
+    }, m.e), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 10,
+        fontWeight: 700,
+        color: "var(--t3)",
+        marginTop: 2
+      }
+    }, m.l));
+  })), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setShowSummary(null);
+    },
+    style: {
+      width: "100%",
+      padding: 14,
+      borderRadius: 14,
+      border: "none",
+      background: "var(--ac)",
+      cursor: "pointer",
+      fontSize: 15,
+      fontWeight: 800,
+      color: "#fff"
+    }
+  }, "Done"))), showWiz && /*#__PURE__*/React.createElement(WizardOverlay, {
+    onClose: function onClose() {
+      return setShowWiz(false);
+    },
+    onCreate: function onCreate(name, days, gender, focus) {
+      var np = buildEmptyPlan(name, days, gender, focus);
+      setPlans(function (p) {
+        return [].concat(_toConsumableArray(p), [np]);
+      });
+      setPid(np.id);
+      setWi(0);
+      setDi(0);
+      setShowWiz(false);
+      setTab("workout");
+    }
+  }), timer && /*#__PURE__*/React.createElement(RestTimer, {
+    sec: tsec,
+    onDone: function onDone() {
+      return setTimer(false);
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "fixed",
+      bottom: 8,
+      left: "50%",
+      transform: "translateX(-50%)",
+      width: "calc(100% - 40px)",
+      maxWidth: 440,
+      padding: "6px",
+      borderRadius: 22,
+      background: "rgba(22,27,34,0.85)",
+      backdropFilter: "blur(24px) saturate(180%)",
+      border: "1px solid rgba(255,255,255,0.06)",
+      boxShadow: "0 8px 32px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.04)",
+      display: "flex",
+      justifyContent: "space-around",
+      gap: 4,
+      zIndex: 90,
+      paddingBottom: "max(4px, env(safe-area-inset-bottom))"
+    }
+  }, [{
+    id: "workout",
+    icon: "dumb",
+    label: "Workout"
+  }, {
+    id: "program",
+    icon: "cal",
+    label: "Program"
+  }, {
+    id: "progress",
+    icon: "chart",
+    label: "Progress"
+  }].map(function (t2) {
+    return /*#__PURE__*/React.createElement("button", {
+      key: t2.id,
+      onClick: function onClick() {
+        return setTab(t2.id);
+      },
+      style: _objectSpread({
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 3,
+        padding: "10px 8px",
+        borderRadius: 18,
+        border: "none",
+        background: tab === t2.id ? "rgba(167,139,250,0.15)" : "transparent",
+        color: tab === t2.id ? "var(--ac)" : "var(--t3)",
+        cursor: "pointer",
+        transition: "all .25s cubic-bezier(.16,1,.3,1)"
+      }, tab === t2.id ? {
+        boxShadow: "inset 2px 2px 6px rgba(0,0,0,0.3),inset -2px -2px 6px rgba(167,139,250,0.08)"
+      } : {})
+    }, /*#__PURE__*/React.createElement(I, {
+      n: t2.icon,
+      s: 20,
+      c: tab === t2.id ? "var(--ac)" : "var(--t3)"
+    }), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: 12,
+        fontWeight: 800,
+        letterSpacing: "0.04em"
+      }
+    }, t2.label));
+  }))));
+}
+ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(ForgeApp));
+</script></body></html>
